@@ -1,14 +1,17 @@
 // Nur Syafiqah
 
-public class Student extends User {
+public class Student extends Enrolment {
 	private int studentID;
 	private String studentName;
-	
-	public Student(String nric, String username, String password, int contactNo, String emailAddress, String userType,
-			int studentID, String studentName) {
-		super(nric, username, password, contactNo, emailAddress, userType);
+	private String contactNo;
+	private String emailAddress;
+
+	public Student(int studentID, String studentName, String contactNo, String emailAddress, String enrolDate) {
+		super(enrolDate);
 		this.studentID = studentID;
 		this.studentName = studentName;
+		this.contactNo = contactNo;
+		this.emailAddress = emailAddress;
 	}
 
 	public int getStudentID() {
@@ -17,5 +20,14 @@ public class Student extends User {
 
 	public String getStudentName() {
 		return studentName;
-	}	
+	}
+
+	public String getContactNo() {
+		return contactNo;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
 }
