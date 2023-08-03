@@ -1,13 +1,12 @@
 // Nur Syafiqah
 
-public class Student extends Enrolment {
+public class Student {
 	private int studentID;
 	private String studentName;
 	private String contactNo;
 	private String emailAddress;
 
-	public Student(int studentID, String studentName, String contactNo, String emailAddress, String enrolDate) {
-		super(enrolDate);
+	public Student(int studentID, String studentName, String contactNo, String emailAddress) {
 		this.studentID = studentID;
 		this.studentName = studentName;
 		this.contactNo = contactNo;

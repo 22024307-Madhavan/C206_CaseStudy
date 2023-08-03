@@ -7,20 +7,17 @@ public class C206_CaseStudy {
 
 		ArrayList<Student> studentList = new ArrayList<Student>();
 
-		studentList.add(new Student(22011021, "Nur Alisha", "87221032", "alice@mail.com", "17/04/2023"));
-		studentList.add(new Student(22011022, "Bob Tan", "98653211", "bobby@mail.com", "24/04/2023"));
-		studentList.add(new Student(22011023, "Charlie", "85529633", "charlie@mail.com", "17/04/2023"));
+		studentList.add(new Student(22011021, "Nur Alisha", "87221032", "alice@mail.com"));
+		studentList.add(new Student(22011022, "Bob Tan", "98653211", "bobby@mail.com"));
+		studentList.add(new Student(22011023, "Charlie", "85529633", "charlie@mail.com"));
 
 		ArrayList<Course> courseList = new ArrayList<Course>();
 
-		courseList.add(new Course("C110","Mathematic","Ms Mary", "Monday"));
-		courseList.add(new Course("C235","Science","Mr James", "Tuesday"));
-		courseList.add(new Course("C105","English","Ms Tan", "Wednesday"));
-		courseList.add(new Course("C208","Literature","Mr John", "Thursday"));
-		courseList.add(new Course("C338","Geography","Dr Alvin", "Friday"));
-
-
-
+		courseList.add(new Course("C110", "Mathematic", "Ms Mary", "Monday"));
+		courseList.add(new Course("C235", "Science", "Mr James", "Tuesday"));
+		courseList.add(new Course("C105", "English", "Ms Tan", "Wednesday"));
+		courseList.add(new Course("C208", "Literature", "Mr John", "Thursday"));
+		courseList.add(new Course("C338", "Geography", "Dr Alvin", "Friday"));
 
 		int option = 0;
 		int view = 0;
@@ -57,7 +54,7 @@ public class C206_CaseStudy {
 
 					} else if (view == 5) {
 						// insert "view all courses" code here
-						viewAllCourse(courseList); //adib adam
+						viewAllCourse(courseList); // adib adam
 					} else {
 						System.out.println("Invalid option to view.\n");
 					}
@@ -81,7 +78,7 @@ public class C206_CaseStudy {
 					} else if (add == 5) {
 						// insert "add new courses" code here
 						Course cors = inputCourseDetails(); // adib adam
-						addCourse(courseList,cors); //adib adam
+						addCourse(courseList, cors); // adib adam
 
 					} else {
 						System.out.println("Invalid option to add.\n");
@@ -103,7 +100,7 @@ public class C206_CaseStudy {
 					} else if (del == 5) {
 						// insert "delete an existing courses" code here
 						removeCourse(courseList); // adib adam
-						
+
 					} else {
 						System.out.println("Invalid option to delete.\n");
 					}
@@ -219,12 +216,12 @@ public class C206_CaseStudy {
 		C206_CaseStudy.setHeader(" VIEW ALL STUDENTS ");
 		String output = "";
 
-		System.out.println(String.format("%-15s %-20s %-20s %-23s %-20s %-15s", "==========", "============",
-				"==============", "=============", "==============", "================"));
-		System.out.println(String.format("%-15s %-20s %-20s %-23s %-20s %-15s", "Student ID", "Student Name",
-				"Contact Number", "Email Address", "Enrolment Date", "Enrolment Status"));
-		System.out.println(String.format("%-15s %-20s %-20s %-23s %-20s %-15s", "==========", "============",
-				"==============", "=============", "==============", "================"));
+		System.out.println(String.format("%-15s %-20s %-20s %-23s", "==========", "============", "==============",
+				"============="));
+		System.out.println(String.format("%-15s %-20s %-20s %-23s", "Student ID", "Student Name", "Contact Number",
+				"Email Address"));
+		System.out.println(String.format("%-15s %-20s %-20s %-23s", "==========", "============", "==============",
+				"============="));
 
 		output += retrieveAllStudents(studentList);
 		System.out.println(output);
@@ -236,46 +233,39 @@ public class C206_CaseStudy {
 		String output = "";
 
 		for (int i = 0; i < studentList.size(); i++) {
-			if (studentList.get(i).isEnrolled()) { // Check if the student is enrolled
-				output += String.format("%-15d %-20s %-20s %-23s %-20s %-15s\n", studentList.get(i).getStudentID(),
-						studentList.get(i).getStudentName(), studentList.get(i).getContactNo(),
-						studentList.get(i).getEmailAddress(), studentList.get(i).getEnrolDate(),
-						C206_CaseStudy.enrolmentStatus(studentList.get(i).isEnrolled()));
-			}
+			output += String.format("%-15d %-20s %-20s %-23s\n", studentList.get(i).getStudentID(),
+					studentList.get(i).getStudentName(), studentList.get(i).getContactNo(),
+					studentList.get(i).getEmailAddress());
+
 		}
 		return output;
 	}
-	
-	
+
 // view all course Adib adam
 	public static void viewAllCourse(ArrayList<Course> courseList) {
 		C206_CaseStudy.setHeader(" VIEW ALL COURSE ");
 		String output = "";
 
-		output += (String.format("%-15s %-20s %-20s %-15s","===========",
-				"===========","===========","=========="));
-		output+=(String.format("%-15s %-20s %-20s %-15s","CourseCode",
-				"CourseTitle","Instructor","Schedule"));
-		output+=(String.format("%-15s %-20s %-20s %-15s","===========",
-				"===========","===========","=========="));
-		
-		
+		output += (String.format("%-15s %-20s %-20s %-15s", "===========", "===========", "===========", "=========="));
+		output += (String.format("%-15s %-20s %-20s %-15s", "CourseCode", "CourseTitle", "Instructor", "Schedule"));
+		output += (String.format("%-15s %-20s %-20s %-15s", "===========", "===========", "===========", "=========="));
 
 		output += retrieveAllCourse(courseList);
 		System.out.println(output);
 
 	}
-	
+
 	// view all course adib adam
 	public static String retrieveAllCourse(ArrayList<Course> courseList) {
 		String output = "";
 
-		for ( int i = 0; i < courseList.size(); i++) {
-			output += String.format("%-15s %-20s %-20s %-15s\n", courseList.get(i).getCourseCode(), courseList.get(i).getCourseTitle(), courseList.get(i).getInstructor(), courseList.get(i).getSchedule());
+		for (int i = 0; i < courseList.size(); i++) {
+			output += String.format("%-15s %-20s %-20s %-15s\n", courseList.get(i).getCourseCode(),
+					courseList.get(i).getCourseTitle(), courseList.get(i).getInstructor(),
+					courseList.get(i).getSchedule());
 		}
-		return output;	
+		return output;
 	}
-
 
 	// ====================== Option 2 Add ======================
 
@@ -285,10 +275,9 @@ public class C206_CaseStudy {
 		String name = Helper.readString("Enter Student Name > ");
 		String mobile = Helper.readStringRegEx("Enter Contact Number > ", CONTACTNUM_PATTERN);
 		String email = Helper.readString("Enter Email Address > ");
-		String enrol = Helper.readString("Enter Enrolment Date > ");
 
 		// Create a new Student object with the entered information.
-		Student stud = new Student(id, name, mobile, email, enrol);
+		Student stud = new Student(id, name, mobile, email);
 		return stud;
 	}
 
@@ -312,9 +301,9 @@ public class C206_CaseStudy {
 		// Add the new student to the list when everything is correctly filled in.
 		studentList.add(stud);
 	}
-	
-	//add course adib adam
-	public static Course  inputCourseDetails() {
+
+	// add course adib adam
+	public static Course inputCourseDetails() {
 
 		String code = Helper.readString("Enter course code > ");
 		String title = Helper.readString("Enter course title  > ");
@@ -322,11 +311,11 @@ public class C206_CaseStudy {
 		String sched = Helper.readString("Enter course schedule > ");
 
 		// Create a new course object with the entered information.
-		Course cors  = new Course(code, title, teacher, sched);
+		Course cors = new Course(code, title, teacher, sched);
 		System.out.println("Course added");
-		return cors ;
+		return cors;
 	}
-	
+
 	// add course adib adam
 	public static void addCourse(ArrayList<Course> courseList, Course cors) {
 		Course courseAdded;
@@ -335,25 +324,22 @@ public class C206_CaseStudy {
 			courseAdded = courseList.get(i);
 			if (courseAdded.getCourseCode().equalsIgnoreCase(cors.getCourseCode())) {
 				// The course code already exists, don't add it again to course list.
-				System.out.println("course code  existed !!");;
+				System.out.println("course code  existed !!");
+				;
 			}
 		}
 		// Check to make sure that the student's name and email address are not empty.
 		if (cors.getCourseCode().isEmpty() || (cors.getCourseTitle().isEmpty())) {
 			// The course code and course title is empty, don't add them in
 			// course ArrayList.
-			System.out.println(" Course code and course name cant be empty!");;
+			System.out.println(" Course code and course name cant be empty!");
+			;
 		}
-		
-		// Add the new course  to the list when everything is correctly filled in.
+
+		// Add the new course to the list when everything is correctly filled in.
 		courseList.add(cors);
 
-
-
 	}
-	
-
-
 
 	// ====================== Option 3 Delete/Remove ======================
 	public static boolean doRemoveStudent(ArrayList<Student> studentList, int id) {
@@ -365,8 +351,8 @@ public class C206_CaseStudy {
 
 		for (int i = 0; i < studentList.size(); i++) {
 
-			// existing student ID & still enroll
-			if (id == studentList.get(i).getStudentID() && studentList.get(i).isEnrolled() == true) {
+			// existing student ID
+			if (id == studentList.get(i).getStudentID()) {
 				studentList.remove(studentList.get(i));
 				isWithdraw = true;
 				break;
@@ -400,32 +386,32 @@ public class C206_CaseStudy {
 			}
 		}
 	}
-	
+
 	// delete course adib adam
 	public static boolean doRemoveCourse(ArrayList<Course> courseList, String courseCode) {
 		boolean isWithdraw = false;
-		
-		if(courseCode.isEmpty()) {
+
+		if (courseCode.isEmpty()) {
 			return false;
 		}
-		
-		for ( int i = 0; i < courseList.size(); i++) {
+
+		for (int i = 0; i < courseList.size(); i++) {
 			if (courseCode.equalsIgnoreCase(courseList.get(i).getCourseCode())) {
 				courseList.remove(courseList.get(i));
 				isWithdraw = true;
 				break;
 			}
 		}
-		
+
 		return isWithdraw;
-		
+
 	}
-	
+
 	// delete course adib adam
 	public static void removeCourse(ArrayList<Course> courseList) {
-		
+
 		C206_CaseStudy.viewAllCourse(courseList);
-		
+
 		String ccode = Helper.readString("Enter course code > ");
 		char confirm = Helper.readChar("Are you sure to delete Course " + ccode + "? (Y/N) > ");
 		if (confirm == 'Y' || confirm == 'y') {
@@ -443,11 +429,6 @@ public class C206_CaseStudy {
 				System.out.println("\nInvalid Course code.\n");
 			}
 		}
-		
 
-		
 	}
 }
-	
-
-
