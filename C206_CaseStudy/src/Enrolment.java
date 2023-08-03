@@ -1,28 +1,24 @@
-public class Enrolment {
+public class Enrolment { //madhavan
 	private int studentID;
 	private String studentName;
 	private String StartDate;
 	private String EndDate;
 	private String CourseName;
-	private boolean isEnrolled;
-
-	public Enrolment(int studentID, String studentName, String StartDate, String EndDate, String CourseName,
-			boolean isEnrolled) {
+	
+	
+	
+	
+	
+	public Enrolment(int studentID,String studentName,String StartDate,String EndDate,String CourseName) {
 		this.studentID = studentID;
 		this.studentName = studentName;
 		this.StartDate = StartDate;
 		this.EndDate = EndDate;
 		this.CourseName = CourseName;
-		this.isEnrolled = true;
+		
 	}
 
-	public boolean isEnrolled() {
-		return isEnrolled;
-	}
 
-	public void setEnrolled(boolean isEnrolled) {
-		this.isEnrolled = isEnrolled;
-	}
 
 	public int getStudentID() {
 		return studentID;
@@ -52,4 +48,5 @@ public class Enrolment {
 		return CourseName;
 	}
 
+	
 }

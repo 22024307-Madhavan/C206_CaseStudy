@@ -4,6 +4,7 @@ public class C206_CaseStudy {
 	private static final String CONTACTNUM_PATTERN = "[89][0-9]{7}";
 
 	public static void main(String[] args) {
+		ArrayList<Enrolment> enrolmentList = new ArrayList<Enrolment>();
 
 		ArrayList<Student> studentList = new ArrayList<Student>();
 
@@ -43,6 +44,7 @@ public class C206_CaseStudy {
 
 					if (view == 1) { // ---- VIEW ----
 						// insert "view all enrolments" code here
+						viewAllEnrolments(enrolmentList); //madhavan
 					} else if (view == 2) {
 						// insert "view all students" code here
 						viewAllStudents(studentList);
@@ -64,6 +66,11 @@ public class C206_CaseStudy {
 
 					if (add == 1) {
 						// insert "add new enrolment" code here
+						Enrolment enrol = inputEnrolment();
+						addEnrolment(enrolmentList, enrol);
+
+						System.out.println("\n enrolment added successfully!\n");
+
 					} else if (add == 2) {
 						// insert "add new students" code here
 						Student stud = inputStudentDetails();
@@ -89,6 +96,7 @@ public class C206_CaseStudy {
 
 					if (del == 1) {
 						// insert "delete an existing enrolment" code here
+						removeEnrolment(enrolmentList);
 					} else if (del == 2) {
 						// insert "delete an existing students" code here
 						removeStudent(studentList);
@@ -265,7 +273,29 @@ public class C206_CaseStudy {
 					courseList.get(i).getSchedule());
 		}
 		return output;
+		
 	}
+	//Madhavan
+	public static void viewAllEnrolments(ArrayList<Enrolment> enrolmentList) {
+		C206_CaseStudy.setHeader(" VIEW ALL ENROLMENTS ");
+		String output = String.format("%-10s %-20s %-20s %-20s %-15s\n", "Student ID", "Student Name", "Start Date",
+				"End Date", "Course Name");
+		output += retrieveAllEnrolments(enrolmentList);
+		System.out.println(output);
+	}
+
+	public static String retrieveAllEnrolments(ArrayList<Enrolment> enrolmentList) {
+		String output = "";
+
+		for (int i = 0; i < enrolmentList.size(); i++) {
+			output += String.format("%-10d %-20S %-20s %-20s %-15s\n", enrolmentList.get(i).getStudentID(),
+					enrolmentList.get(i).getStudentName(), enrolmentList.get(i).getStartDate(),
+					enrolmentList.get(i).getEndDate(), enrolmentList.get(i).getCourseName());
+		}
+		return output;
+	}
+
+	
 
 	// ====================== Option 2 Add ======================
 
@@ -339,7 +369,36 @@ public class C206_CaseStudy {
 		// Add the new course to the list when everything is correctly filled in.
 		courseList.add(cors);
 
+	} // madhavan
+	public static Enrolment inputEnrolment() {
+		int id = Helper.readInt("Enter Student ID > ");
+		String name = Helper.readString("Enter Student Name > ");
+		String StartDate = Helper.readString("Enter the Start Date of the Enrolment > ");
+		String EndDate = Helper.readString("Enter the End Date of the Enrolment > ");
+		String CourseName = Helper.readString("Enter the Course Name > ");
+
+		Enrolment enrol = new Enrolment(id, name, StartDate, EndDate, CourseName);
+		return enrol;
 	}
+
+	public static void addEnrolment(ArrayList<Enrolment> enrolmentList, Enrolment enrol) {
+		Enrolment record;
+		for (int i = 0; i < enrolmentList.size(); i++) {
+			record = enrolmentList.get(i);
+			if (record.getStudentID() == enrol.getStudentID()) {
+				// The student ID already exists, don't add it again to student list.
+				return;
+			}
+
+		}
+
+		if (enrol.getCourseName().isEmpty() || (enrol.getStudentName().isEmpty())) {
+			return;
+
+		}
+		enrolmentList.add(enrol);
+	}
+
 
 	// ====================== Option 3 Delete/Remove ======================
 	public static boolean doRemoveStudent(ArrayList<Student> studentList, int id) {
@@ -430,5 +489,48 @@ public class C206_CaseStudy {
 			}
 		}
 
-	}
+	}//madhavan
+	public static boolean doRemoveEnrolment(ArrayList<Enrolment> enrolmentList, String StudentName) {
+	    boolean isWithdraw = false;
+	    
+	    if(StudentName.isEmpty()) {
+	      return false;
+	    }
+	    
+	    for ( int i = 0; i < enrolmentList.size(); i++) {
+	      if (StudentName.equalsIgnoreCase(enrolmentList.get(i).getStudentName())) {
+	        enrolmentList.remove(enrolmentList.get(i));
+	        isWithdraw = true;
+	        break;
+	      }
+	    }
+	    
+	    return isWithdraw;
+	    
+	  }
+	public static void removeEnrolment(ArrayList<Enrolment> enrolmentList) {
+	    
+	    C206_CaseStudy.viewAllEnrolments(enrolmentList);
+	    
+	    String ecode = Helper.readString("Enter Student Name  > ");
+	    char confirm = Helper.readChar("Are you sure to delete enrolment " + ecode + "? (Y/N) > ");
+	    if (confirm == 'Y' || confirm == 'y') {
+
+	      // If user confirm to delete, call the doRemoveStudent() method to remove the
+	      // student from the list.
+	      Boolean withdraw = doRemoveEnrolment(enrolmentList, ecode);
+
+	      // If the student was successfully removed, print a message to confirm.
+	      if (withdraw) { // withdraw == true
+	        System.out.println("\n Student enrolment " + ecode + " successfully delete!\n");
+	      }
+	      // Otherwise, print a message to indicate that the student ID is invalid.
+	      else {
+	        System.out.println("\nInvalid Student enrolment .\n");
+	      }
+	    }
+	    
+
+	    
+	  }
 }
