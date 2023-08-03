@@ -11,6 +11,17 @@ public class C206_CaseStudy {
 		studentList.add(new Student(22011022, "Bob Tan", "98653211", "bobby@mail.com", "24/04/2023"));
 		studentList.add(new Student(22011023, "Charlie", "85529633", "charlie@mail.com", "17/04/2023"));
 
+		ArrayList<Course> courseList = new ArrayList<Course>();
+
+		courseList.add(new Course("C110","Mathematic","Ms Mary", "Monday"));
+		courseList.add(new Course("C235","Science","Mr James", "Tuesday"));
+		courseList.add(new Course("C105","English","Ms Tan", "Wednesday"));
+		courseList.add(new Course("C208","Literature","Mr John", "Thursday"));
+		courseList.add(new Course("C338","Geography","Dr Alvin", "Friday"));
+
+
+
+
 		int option = 0;
 		int view = 0;
 		int add = 0;
@@ -46,6 +57,7 @@ public class C206_CaseStudy {
 
 					} else if (view == 5) {
 						// insert "view all courses" code here
+						viewAllCourse(courseList); //adib adam
 					} else {
 						System.out.println("Invalid option to view.\n");
 					}
@@ -68,6 +80,9 @@ public class C206_CaseStudy {
 
 					} else if (add == 5) {
 						// insert "add new courses" code here
+						Course cors = inputCourseDetails(); // adib adam
+						addCourse(courseList,cors); //adib adam
+
 					} else {
 						System.out.println("Invalid option to add.\n");
 					}
@@ -87,6 +102,8 @@ public class C206_CaseStudy {
 						// insert "delete an existing user accounts" code here
 					} else if (del == 5) {
 						// insert "delete an existing courses" code here
+						removeCourse(courseList); // adib adam
+						
 					} else {
 						System.out.println("Invalid option to delete.\n");
 					}
@@ -228,10 +245,41 @@ public class C206_CaseStudy {
 		}
 		return output;
 	}
+	
+	
+// view all course Adib adam
+	public static void viewAllCourse(ArrayList<Course> courseList) {
+		C206_CaseStudy.setHeader(" VIEW ALL COURSE ");
+		String output = "";
+
+		output += (String.format("%-15s %-20s %-20s %-15s","===========",
+				"===========","===========","=========="));
+		output+=(String.format("%-15s %-20s %-20s %-15s","CourseCode",
+				"CourseTitle","Instructor","Schedule"));
+		output+=(String.format("%-15s %-20s %-20s %-15s","===========",
+				"===========","===========","=========="));
+		
+		
+
+		output += retrieveAllCourse(courseList);
+		System.out.println(output);
+
+	}
+	
+	// view all course adib adam
+	public static String retrieveAllCourse(ArrayList<Course> courseList) {
+		String output = "";
+
+		for ( int i = 0; i < courseList.size(); i++) {
+			output += String.format("%-15s %-20s %-20s %-15s\n", courseList.get(i).getCourseCode(), courseList.get(i).getCourseTitle(), courseList.get(i).getInstructor(), courseList.get(i).getSchedule());
+		}
+		return output;	
+	}
+
 
 	// ====================== Option 2 Add ======================
 
-	// Add Students
+	// Add Studentsa
 	public static Student inputStudentDetails() {
 		int id = Helper.readInt("Enter Student ID > ");
 		String name = Helper.readString("Enter Student Name > ");
@@ -264,6 +312,48 @@ public class C206_CaseStudy {
 		// Add the new student to the list when everything is correctly filled in.
 		studentList.add(stud);
 	}
+	
+	//add course adib adam
+	public static Course  inputCourseDetails() {
+
+		String code = Helper.readString("Enter course code > ");
+		String title = Helper.readString("Enter course title  > ");
+		String teacher = Helper.readString("Enter intructor's name > ");
+		String sched = Helper.readString("Enter course schedule > ");
+
+		// Create a new course object with the entered information.
+		Course cors  = new Course(code, title, teacher, sched);
+		System.out.println("Course added");
+		return cors ;
+	}
+	
+	// add course adib adam
+	public static void addCourse(ArrayList<Course> courseList, Course cors) {
+		Course courseAdded;
+		// Check to see if the course already exists in the list.
+		for (int i = 0; i < courseList.size(); i++) {
+			courseAdded = courseList.get(i);
+			if (courseAdded.getCourseCode().equalsIgnoreCase(cors.getCourseCode())) {
+				// The course code already exists, don't add it again to course list.
+				System.out.println("course code  existed !!");;
+			}
+		}
+		// Check to make sure that the student's name and email address are not empty.
+		if (cors.getCourseCode().isEmpty() || (cors.getCourseTitle().isEmpty())) {
+			// The course code and course title is empty, don't add them in
+			// course ArrayList.
+			System.out.println(" Course code and course name cant be empty!");;
+		}
+		
+		// Add the new course  to the list when everything is correctly filled in.
+		courseList.add(cors);
+
+
+
+	}
+	
+
+
 
 	// ====================== Option 3 Delete/Remove ======================
 	public static boolean doRemoveStudent(ArrayList<Student> studentList, int id) {
@@ -275,7 +365,7 @@ public class C206_CaseStudy {
 
 		for (int i = 0; i < studentList.size(); i++) {
 
-			// existing student ID & still enrol
+			// existing student ID & still enroll
 			if (id == studentList.get(i).getStudentID() && studentList.get(i).isEnrolled() == true) {
 				studentList.remove(studentList.get(i));
 				isWithdraw = true;
@@ -310,4 +400,54 @@ public class C206_CaseStudy {
 			}
 		}
 	}
+	
+	// delete course adib adam
+	public static boolean doRemoveCourse(ArrayList<Course> courseList, String courseCode) {
+		boolean isWithdraw = false;
+		
+		if(courseCode.isEmpty()) {
+			return false;
+		}
+		
+		for ( int i = 0; i < courseList.size(); i++) {
+			if (courseCode.equalsIgnoreCase(courseList.get(i).getCourseCode())) {
+				courseList.remove(courseList.get(i));
+				isWithdraw = true;
+				break;
+			}
+		}
+		
+		return isWithdraw;
+		
+	}
+	
+	// delete course adib adam
+	public static void removeCourse(ArrayList<Course> courseList) {
+		
+		C206_CaseStudy.viewAllCourse(courseList);
+		
+		String ccode = Helper.readString("Enter course code > ");
+		char confirm = Helper.readChar("Are you sure to delete Course " + ccode + "? (Y/N) > ");
+		if (confirm == 'Y' || confirm == 'y') {
+
+			// If user confirm to delete, call the doRemoveStudent() method to remove the
+			// student from the list.
+			Boolean withdraw = doRemoveCourse(courseList, ccode);
+
+			// If the student was successfully removed, print a message to confirm.
+			if (withdraw) { // withdraw == true
+				System.out.println("\nCourse code " + ccode + " successfully delete!\n");
+			}
+			// Otherwise, print a message to indicate that the student ID is invalid.
+			else {
+				System.out.println("\nInvalid Course code.\n");
+			}
+		}
+		
+
+		
+	}
 }
+	
+
+
