@@ -1,4 +1,5 @@
 public class Enrolment { //madhavan
+	private int enrolmentID;
 	private int studentID;
 	private String studentName;
 	private String StartDate;
@@ -8,8 +9,8 @@ public class Enrolment { //madhavan
 	
 	
 	
-	
-	public Enrolment(int studentID,String studentName,String StartDate,String EndDate,String CourseName) {
+	public Enrolment(int enrolmentID,int studentID,String studentName,String StartDate,String EndDate,String CourseName) {
+		this.enrolmentID = enrolmentID;
 		this.studentID = studentID;
 		this.studentName = studentName;
 		this.StartDate = StartDate;
@@ -19,6 +20,10 @@ public class Enrolment { //madhavan
 	}
 
 
+
+	public int getEnrolmentID() {
+		return enrolmentID;
+	}
 
 	public int getStudentID() {
 		return studentID;
@@ -47,6 +52,11 @@ public class Enrolment { //madhavan
 	public String getCourseName() {
 		return CourseName;
 	}
+
+
+
+	
+	
 
 	
 }

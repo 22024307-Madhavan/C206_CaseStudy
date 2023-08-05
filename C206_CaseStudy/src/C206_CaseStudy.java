@@ -278,17 +278,17 @@ public class C206_CaseStudy {
 	//Madhavan
 	public static void viewAllEnrolments(ArrayList<Enrolment> enrolmentList) {
 		C206_CaseStudy.setHeader(" VIEW ALL ENROLMENTS ");
-		String output = String.format("%-10s %-20s %-20s %-20s %-15s\n", "Student ID", "Student Name", "Start Date",
+		String output = String.format("%-10s %-10s %-20s %-20s %-20s %-15s\n","Enrolment ID", "Student ID", "Student Name", "Start Date",
 				"End Date", "Course Name");
 		output += retrieveAllEnrolments(enrolmentList);
 		System.out.println(output);
 	}
 
-	public static String retrieveAllEnrolments(ArrayList<Enrolment> enrolmentList) {
+	public static String retrieveAllEnrolments(ArrayList<Enrolment> enrolmentList) {//madhavan
 		String output = "";
 
 		for (int i = 0; i < enrolmentList.size(); i++) {
-			output += String.format("%-10d %-20S %-20s %-20s %-15s\n", enrolmentList.get(i).getStudentID(),
+			output += String.format("%-10d %-10d %-20S %-20s %-20s %-15s\n",enrolmentList.get(i).getEnrolmentID() ,enrolmentList.get(i).getStudentID(),
 					enrolmentList.get(i).getStudentName(), enrolmentList.get(i).getStartDate(),
 					enrolmentList.get(i).getEndDate(), enrolmentList.get(i).getCourseName());
 		}
@@ -299,7 +299,7 @@ public class C206_CaseStudy {
 
 	// ====================== Option 2 Add ======================
 
-	// Add Studentsa
+	// Add Students
 	public static Student inputStudentDetails() {
 		int id = Helper.readInt("Enter Student ID > ");
 		String name = Helper.readString("Enter Student Name > ");
@@ -371,22 +371,23 @@ public class C206_CaseStudy {
 
 	} // madhavan
 	public static Enrolment inputEnrolment() {
-		int id = Helper.readInt("Enter Student ID > ");
+		int enrolmentID = Helper.readInt("Enter Enrolment ID");
+		int studentID = Helper.readInt("Enter Student ID > ");
 		String name = Helper.readString("Enter Student Name > ");
 		String StartDate = Helper.readString("Enter the Start Date of the Enrolment > ");
 		String EndDate = Helper.readString("Enter the End Date of the Enrolment > ");
 		String CourseName = Helper.readString("Enter the Course Name > ");
 
-		Enrolment enrol = new Enrolment(id, name, StartDate, EndDate, CourseName);
+		Enrolment enrol = new Enrolment(enrolmentID,studentID, name, StartDate, EndDate, CourseName);
 		return enrol;
 	}
 
-	public static void addEnrolment(ArrayList<Enrolment> enrolmentList, Enrolment enrol) {
+	public static void addEnrolment(ArrayList<Enrolment> enrolmentList, Enrolment enrol) {//madhavan
 		Enrolment record;
 		for (int i = 0; i < enrolmentList.size(); i++) {
 			record = enrolmentList.get(i);
-			if (record.getStudentID() == enrol.getStudentID()) {
-				// The student ID already exists, don't add it again to student list.
+			if (record.getStudentID() == enrol.getStudentID()|| (record.getEnrolmentID() == enrol.getEnrolmentID())) {
+				// The student ID and enrolment ID already exist, don't add it again to student list.
 				return;
 			}
 
@@ -490,15 +491,15 @@ public class C206_CaseStudy {
 		}
 
 	}//madhavan
-	public static boolean doRemoveEnrolment(ArrayList<Enrolment> enrolmentList, String StudentName) {
+	public static boolean doRemoveEnrolment(ArrayList<Enrolment> enrolmentList, int enrolmentID) {
 	    boolean isWithdraw = false;
 	    
-	    if(StudentName.isEmpty()) {
+	    if(enrolmentID == 0) {
 	      return false;
 	    }
 	    
 	    for ( int i = 0; i < enrolmentList.size(); i++) {
-	      if (StudentName.equalsIgnoreCase(enrolmentList.get(i).getStudentName())) {
+	    	 if (enrolmentID == enrolmentList.get(i).getEnrolmentID()) {
 	        enrolmentList.remove(enrolmentList.get(i));
 	        isWithdraw = true;
 	        break;
@@ -508,21 +509,21 @@ public class C206_CaseStudy {
 	    return isWithdraw;
 	    
 	  }
-	public static void removeEnrolment(ArrayList<Enrolment> enrolmentList) {
+	public static void removeEnrolment(ArrayList<Enrolment> enrolmentList) { //madhavan
 	    
 	    C206_CaseStudy.viewAllEnrolments(enrolmentList);
 	    
-	    String ecode = Helper.readString("Enter Student Name  > ");
-	    char confirm = Helper.readChar("Are you sure to delete enrolment " + ecode + "? (Y/N) > ");
+	    int enrolID = Helper.readInt("Enter Enrolment ID  > ");
+	    char confirm = Helper.readChar("Are you sure to delete enrolment " + enrolID + "? (Y/N) > ");
 	    if (confirm == 'Y' || confirm == 'y') {
 
 	      // If user confirm to delete, call the doRemoveStudent() method to remove the
 	      // student from the list.
-	      Boolean withdraw = doRemoveEnrolment(enrolmentList, ecode);
+	      Boolean withdraw = doRemoveEnrolment(enrolmentList, enrolID);
 
 	      // If the student was successfully removed, print a message to confirm.
 	      if (withdraw) { // withdraw == true
-	        System.out.println("\n Student enrolment " + ecode + " successfully delete!\n");
+	        System.out.println("\n Student enrolment " + enrolID + " successfully delete!\n");
 	      }
 	      // Otherwise, print a message to indicate that the student ID is invalid.
 	      else {

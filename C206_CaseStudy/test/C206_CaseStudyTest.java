@@ -13,10 +13,14 @@ public class C206_CaseStudyTest {
 
 	private Course course1;
 	private Course course2;
+	
+	private Enrolment enrolment1;//Madhavan
+	private Enrolment enrolment2;//Madhavan
 
 	private ArrayList<Student> studentList;// adib adam
 	private ArrayList<Course> courseList;// adib adam
-
+	private ArrayList<Enrolment> enrolmentList;//Madhavan
+	
 	@Before
 	public void setUp() throws Exception {
 		student1 = new Student(22013320, "Mika", "98776531", "mika@mail.com"); // nur syafiqah
@@ -80,6 +84,32 @@ public class C206_CaseStudyTest {
 		C206_CaseStudy.addCourse(courseList, missingCode);
 		assertEquals("Test that the Course arraylist size is unchange.", 1, courseList.size());
 	}// adib adam
+	
+	public void testAddEnrolments() { //madhavan
+		// Valid enrolment ArrayList is not null and it is empty. (boundary)
+		// Size of the ArrayList is 0.
+		assertNotNull("Test if there is valid Enrolment ArrayList to add to", enrolmentList);
+		assertEquals("Test that the enrolment ArrayList is empty.", 0, enrolmentList.size());
+
+		// Add an item in Enrolment arraylist (normal)
+		// Size of the ArrayList would be 1.
+		C206_CaseStudy.addEnrolment(enrolmentList, enrolment1);
+		assertEquals("Test that the enrolment arraylist size is now 1.", 1, enrolmentList.size());
+		assertSame("Test that new Enrolmentt is added successfully to the list.", enrolment1, enrolmentList.get(0));
+
+		// Add an item that already exists in the list (error)
+		// Size of the ArrayList would remain as 1.
+		C206_CaseStudy.addEnrolment(enrolmentList, enrolment1);
+		assertEquals("Test that the Enrolment arraylist size is unchanged.", 1, enrolmentList.size());
+
+		// Add an item that has missing detail (error)
+		// "" - Student Name has empty fields
+		// Size of the ArrayList would remain as 1.
+		Enrolment missingEndDate = new Enrolment(25,22089202, "Grace","18/4/2022","","DISM");
+		C206_CaseStudy.addEnrolment(enrolmentList, missingEndDate);
+		assertEquals("Test that the Enrolment arraylist size is unchanged.", 1, enrolmentList.size());
+
+	}
 
 	@Test
 	public void testRetrieveAllStudents() {
@@ -137,6 +167,34 @@ public class C206_CaseStudyTest {
 		assertEquals("Test that the display is correct.", testing, allCourse);
 
 	}// adib adam
+	
+	public void testRetrieveAllEnrolments() { //madhavan
+		// Test Case 1
+		// Test if Item list is not null and empty (Boundary)
+		assertNotNull("Test if there is a valid enrolment arraylist to add to", enrolmentList);
+		assertEquals("Test that the Enrolment arraylist is empty.", 0, enrolmentList.size());
+
+		// Test Case 2
+		// Retrieve the studentList (Boundary)
+		String allEnrolment = C206_CaseStudy.retrieveAllEnrolments(enrolmentList);
+		String testing = "";
+		// Test if the output is empty (Boundary)
+		assertEquals("Test that nothing is displayed", testing, allEnrolment);
+
+		// Test Case 3
+		// Add 2 students in studentList (Normal)
+		C206_CaseStudy.addEnrolment(enrolmentList, enrolment1);
+		C206_CaseStudy.addEnrolment(enrolmentList, enrolment2);
+		// Test that the list is NOT empty. Arraylist size = 2.
+		assertEquals("Test that Enrolment arraylist size is 2.", 2, enrolmentList.size());
+		// Retrieve the studentList
+		allEnrolment = C206_CaseStudy.retrieveAllEnrolments(enrolmentList);
+		testing = String.format("%-15d %-20d %-20s %-20s %-23s %-10s\n", 18, 22045216, "Ryan","18/4/2022","3/3/2025","DBIS");
+		testing += String.format("%-15d %-20d %-20s %-20s %-23s %-10s\n", 16, 22013029, "Riyad","18/4/2022","3/3/2025","DFT");
+		// Test that the details display accurately
+		assertEquals("Test that the display is correct.", testing, allEnrolment);
+
+	}
 
 	@Test
 	public void testDoRemoveStudent() {
@@ -174,6 +232,24 @@ public class C206_CaseStudyTest {
 		confirm = C206_CaseStudy.doRemoveCourse(courseList, "C110");
 		assertFalse("Test that non-existing Course is NOT confirm to delete?", confirm);
 	} // adib adam
+	
+	public void testDoRemoveEnrolment() { //madhavan
+		// Test if Item list is not null and empty (boundary)
+		assertNotNull("Test if there is valid enrolment ArrayList to remove", enrolmentList);
+
+		C206_CaseStudy.addEnrolment(enrolmentList, enrolment1); // add course (test to remove)
+		// Remove existing Course (normal0
+		Boolean confirm = C206_CaseStudy.doRemoveEnrolment(enrolmentList,12);
+		assertTrue("Test if an existing student confirms to delete?", confirm);
+
+		// Remove existing Course AGAIN (error)
+		confirm = C206_CaseStudy.doRemoveEnrolment(enrolmentList, 15);
+		assertFalse("Test if an existing enrolment is NOT confirmed to delete again?", confirm);
+
+		// Remove non-existing course (error)
+		confirm = C206_CaseStudy.doRemoveEnrolment(enrolmentList, 20);
+		assertFalse("Test that non-existing enrolment is NOT confirmed to delete?", confirm);
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -183,6 +259,9 @@ public class C206_CaseStudyTest {
 		course1 = null;// adib adam
 		course2 = null;// adib adam
 		courseList = null;// adib adam
+		enrolment1 = null; //madhavan
+		enrolment2 = null; //madhavan
+		enrolmentList = null;//madhavan
 	}
 
 	/*
