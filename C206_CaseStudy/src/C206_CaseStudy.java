@@ -12,9 +12,9 @@ public class C206_CaseStudy {
 		ArrayList<Fee> feeList = new ArrayList<Fee>();
 		ArrayList<User> userList = new ArrayList<User>();
 
-		studentList.add(new Student(22011021, "Nur Alisha", "87221032", "alice@mail.com"));
-		studentList.add(new Student(22011022, "Bob Tan", "98653211", "bobby@mail.com"));
-		studentList.add(new Student(22011023, "Charlie", "85529633", "charlie@mail.com"));
+		studentList.add(new Student("Nur Alisha", "87221032", "alice@mail.com"));
+		studentList.add(new Student("Bob Tan", "98653211", "bobby@mail.com"));
+		studentList.add(new Student("Charlie", "85529633", "charlie@mail.com"));
 
 		courseList.add(new Course("C110", "Mathematic", "Ms Mary", "Monday"));
 		courseList.add(new Course("C235", "Science", "Mr James", "Tuesday"));
@@ -228,16 +228,16 @@ public class C206_CaseStudy {
 	// return rtnVal;
 	// }
 
-	public static String enrolmentStatus(boolean isEnrolled) {
-		String status;
-
-		if (isEnrolled == true) {
-			status = "Enrolled";
-		} else {
-			status = "Not Enrol"; // not enrol
-		}
-		return status;
-	}
+//	public static String enrolmentStatus(boolean isEnrolled) {
+//		String status;
+//
+//		if (isEnrolled == true) {
+//			status = "Enrolled";
+//		} else {
+//			status = "Not Enrol"; // not enrol
+//		}
+//		return status;
+//	}
 
 	// ====================== Option 1 View ======================
 	// View all Students (Nur Syafiqah)
@@ -260,11 +260,12 @@ public class C206_CaseStudy {
 
 	public static String retrieveAllStudents(ArrayList<Student> studentList) {
 		String output = "";
+//		Fee fee = feeList.get(i);
 
 		for (int i = 0; i < studentList.size(); i++) {
-			output += String.format("%-15d %-20s %-20s %-23s\n", studentList.get(i).getStudentID(),
-					studentList.get(i).getStudentName(), studentList.get(i).getContactNo(),
-					studentList.get(i).getEmailAddress());
+			Student stud = studentList.get(i);
+			output += String.format("%-15d %-20s %-20s %-23s\n", stud.getStudentID(), stud.getStudentName(),
+					stud.getContactNo(), stud.getEmailAddress());
 		}
 		return output;
 	}
@@ -476,13 +477,12 @@ public class C206_CaseStudy {
 
 	// Add Student (Nur Syafiqah)
 	public static Student inputStudentDetails() {
-		int id = Helper.readInt("Enter Student ID > ");
 		String name = Helper.readString("Enter Student Name > ");
 		String mobile = Helper.readStringRegEx("Enter Contact Number > ", CONTACTNUM_PATTERN);
 		String email = Helper.readString("Enter Email Address > ");
 
 		// Create a new Student object with the entered information.
-		Student stud = new Student(id, name, mobile, email);
+		Student stud = new Student(name, mobile, email);
 		return stud;
 	}
 
@@ -492,28 +492,29 @@ public class C206_CaseStudy {
 		// Check to see if the student already exists in the list.
 		for (int i = 0; i < studentList.size(); i++) {
 			studentAdded = studentList.get(i);
-			if (studentAdded.getStudentID() == stud.getStudentID()) {
-				// The student ID already exists, don't add it again to student list.
-				System.out.println("\nStudent ID Exists.\n");
+			if (studentAdded.getContactNo().equals(stud.getContactNo())) {
+				// If mobile number already exists, don't add it to student list.
+				System.out.println("\nContact Number Exists. Try Again.\n");
 				Helper.line(140, "-");
-
 				return;
 			}
 		}
 		// Check to make sure that the student's name and email address are not empty.
-		if ((stud.getEmailAddress().isEmpty()) || (stud.getStudentName().isEmpty())) {
-			// The student email address and student name is empty, don't add them in
-			// student ArrayList.
-			System.out.println("\nFill in Email Address/Student Name.\n");
+		if (stud.getStudentName().isEmpty()) {
+			// The student name is empty, don't add them in student ArrayList.
+			System.out.println("\nFill in Student Name. \n");
 			Helper.line(140, "-");
 			return;
-
+		} else if (stud.getEmailAddress().isEmpty()) {
+			// The student email address is empty, don't add them in student ArrayList.
+			System.out.println("\nFill in Email Address. \n");
+			Helper.line(140, "-");
+			return;
 		} else {
 			// Add the new student to the list when everything is correctly filled in.
 			studentList.add(stud);
 			System.out.println("\nStudent added successfully!\n");
 			Helper.line(140, "-");
-
 		}
 	}
 

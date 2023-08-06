@@ -30,8 +30,8 @@ public class C206_CaseStudyTest {
 
 	@Before
 	public void setUp() throws Exception {
-		student1 = new Student(22013320, "Mika", "98776531", "mika@mail.com"); // nur syafiqah
-		student2 = new Student(22096321, "Azim", "87789632", "azimmy@mail.com"); // nur syafiqah
+		student1 = new Student("Mika", "98776531", "mika@mail.com"); // nur syafiqah
+		student2 = new Student("Azim", "87789632", "azimmy@mail.com"); // nur syafiqah
 
 		course1 = new Course("C234", "History", "Ms Jenny", "Saturday");// adib adam
 		course2 = new Course("C230", "Art", "Mr Heng", "Sunday");// adib adam
@@ -73,7 +73,7 @@ public class C206_CaseStudyTest {
 		// Add an item that has missing detail (error)
 		// "" - Student Name has empty fields
 		// Size of the ArrayList would remain as 1.
-		Student missingName = new Student(22015933, "", "89887523", "elsa@mail.com");
+		Student missingName = new Student("", "89887523", "elsa@mail.com");
 		C206_CaseStudy.addStudent(studentList, missingName);
 		assertEquals("Test that the Student arraylist size is unchange.", 1, studentList.size());
 
@@ -215,8 +215,10 @@ public class C206_CaseStudyTest {
 		assertEquals("Test that Student arraylist size is 2.", 2, studentList.size());
 		// Retrieve the studentList
 		allStudent = C206_CaseStudy.retrieveAllStudents(studentList);
-		testing = String.format("%-15d %-20s %-20s %-23s\n", 22013320, "Mika", "98776531", "mika@mail.com");
-		testing += String.format("%-15d %-20s %-20s %-23s\n", 22096321, "Azim", "87789632", "azimmy@mail.com");
+		testing = String.format("%-15d %-20s %-20s %-23s\n", student1.getStudentID(), "Mika", "98776531",
+				"mika@mail.com");
+		testing += String.format("%-15d %-20s %-20s %-23s\n", student2.getStudentID(), "Azim", "87789632",
+				"azimmy@mail.com");
 		// Test that the details display accurately
 		assertEquals("Test that the display is correct.", testing, allStudent);
 
@@ -397,11 +399,11 @@ public class C206_CaseStudyTest {
 
 		C206_CaseStudy.addStudent(studentList, student1); // add student (test to remove)
 		// Remove existing Student (normal)
-		Boolean confirm = C206_CaseStudy.doRemoveStudent(studentList, 22013320);
+		Boolean confirm = C206_CaseStudy.doRemoveStudent(studentList, student1.getStudentID());
 		assertTrue("Test if an existing student confirms to delete?", confirm);
 
 		// Remove existing student AGAIN (error)
-		confirm = C206_CaseStudy.doRemoveStudent(studentList, 22013320);
+		confirm = C206_CaseStudy.doRemoveStudent(studentList, student1.getStudentID());
 		assertFalse("Test if an existing student is NOT confirm to delete again?", confirm);
 
 		// Remove non-existing student (error)
@@ -518,10 +520,10 @@ public class C206_CaseStudyTest {
 		teacher2 = null; // Justin
 		userList = null; // Justin
 	}
-	
+
 }
 
-	/*
-	 * @Test public void c206_test() { // fail("Not yet implemented");
-	 * assertTrue("C206_CaseStudy_SampleTest ", true); }
-	 */
+/*
+ * @Test public void c206_test() { // fail("Not yet implemented");
+ * assertTrue("C206_CaseStudy_SampleTest ", true); }
+ */

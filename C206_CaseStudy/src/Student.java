@@ -1,13 +1,14 @@
 // Nur Syafiqah
 
 public class Student {
+	private static int counter = 22000001;
 	private int studentID;
 	private String studentName;
 	private String contactNo;
 	private String emailAddress;
 
-	public Student(int studentID, String studentName, String contactNo, String emailAddress) {
-		this.studentID = studentID;
+	public Student(String studentName, String contactNo, String emailAddress) {
+		this.studentID = counter++;
 		this.studentName = studentName;
 		this.contactNo = contactNo;
 		this.emailAddress = emailAddress;
