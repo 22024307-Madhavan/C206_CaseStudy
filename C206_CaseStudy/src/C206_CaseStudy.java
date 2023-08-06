@@ -7,6 +7,7 @@ public class C206_CaseStudy {
 		ArrayList<Enrolment> enrolmentList = new ArrayList<Enrolment>();
 		ArrayList<Student> studentList = new ArrayList<Student>();
 		ArrayList<Course> courseList = new ArrayList<Course>();
+		ArrayList<Fee> feeList = new ArrayList<Fee>();
 
 		studentList.add(new Student(22011021, "Nur Alisha", "87221032", "alice@mail.com"));
 		studentList.add(new Student(22011022, "Bob Tan", "98653211", "bobby@mail.com"));
@@ -17,6 +18,10 @@ public class C206_CaseStudy {
 		courseList.add(new Course("C105", "English", "Ms Tan", "Wednesday"));
 		courseList.add(new Course("C208", "Literature", "Mr John", "Thursday"));
 		courseList.add(new Course("C338", "Geography", "Dr Alvin", "Friday"));
+
+		feeList.add(new Fee(200.99, "21/12/2023", "tuition", 22011021));
+		feeList.add(new Fee(300, "19/09/2023", "exam", 22011022));
+		feeList.add(new Fee(100.35, "23/10/2023", "tuition", 22011023));
 
 		int option = 0;
 		int view = 0;
@@ -44,6 +49,7 @@ public class C206_CaseStudy {
 
 				} else if (view == 3) {
 					// insert "view all fees" code here
+					viewAllFees(feeList); // faiz
 				} else if (view == 4) {
 					// insert "view all user accounts" code here
 
@@ -79,6 +85,8 @@ public class C206_CaseStudy {
 					// System.out.println("\nStudent added successfully!\n");
 				} else if (add == 3) {
 					// insert "add new fees" code here
+					Fee fee = inputFeeDetails();
+					addFee(studentList, feeList, fee); // faiz
 				} else if (add == 4) {
 					// insert "add new user accounts" code here
 
@@ -88,7 +96,7 @@ public class C206_CaseStudy {
 					addCourse(courseList, cors); // adib adam
 
 				} else if (add == 6) {
-//	            menu();
+					// menu();
 				} else {
 					System.out.println("Invalid option to add.\n");
 					Helper.line(140, "-");
@@ -110,6 +118,7 @@ public class C206_CaseStudy {
 
 				} else if (del == 3) {
 					// insert "delete an existing fees" code here
+					removeFee(feeList); // faiz
 				} else if (del == 4) {
 					// insert "delete an existing user accounts" code here
 				} else if (del == 5) {
@@ -117,7 +126,7 @@ public class C206_CaseStudy {
 					removeCourse(courseList); // adib adam
 
 				} else if (del == 6) {
-//	            menu();
+					// menu();
 				} else {
 					System.out.println("Invalid option to delete.\n");
 					Helper.line(140, "-");
@@ -182,16 +191,17 @@ public class C206_CaseStudy {
 		Helper.line(140, "-");
 	}
 
-//	private static String obscure(String inStr) {
-//		String rtnVal = "";
-//		if (inStr.length() <= 5) {
-//			rtnVal = inStr;
-//		} else {
-//			rtnVal = inStr.substring(0, 1) + String.format("%" + (inStr.length() - 5) + "s", " ").replaceAll(" ", "X")
-//					+ inStr.substring(inStr.length() - 4);
-//		}
-//		return rtnVal;
-//	}
+	// private static String obscure(String inStr) {
+	// String rtnVal = "";
+	// if (inStr.length() <= 5) {
+	// rtnVal = inStr;
+	// } else {
+	// rtnVal = inStr.substring(0, 1) + String.format("%" + (inStr.length() - 5) +
+	// "s", " ").replaceAll(" ", "X")
+	// + inStr.substring(inStr.length() - 4);
+	// }
+	// return rtnVal;
+	// }
 
 	public static String enrolmentStatus(boolean isEnrolled) {
 		String status;
@@ -205,7 +215,7 @@ public class C206_CaseStudy {
 	}
 
 	// ====================== Option 1 View ======================
-	// View all Students
+	// View all Students (Nur Syafiqah)
 	public static void viewAllStudents(ArrayList<Student> studentList) {
 		setHeader(" VIEW ALL STUDENTS ");
 		String output = "";
@@ -234,7 +244,7 @@ public class C206_CaseStudy {
 		return output;
 	}
 
-// view all course Adib adam
+	// View all Courses (Adib adam)
 	public static void viewAllCourse(ArrayList<Course> courseList) {
 		setHeader(" VIEW ALL COURSE ");
 		String output = "";
@@ -248,7 +258,6 @@ public class C206_CaseStudy {
 
 	}
 
-	// view all course adib adam
 	public static String retrieveAllCourse(ArrayList<Course> courseList) {
 		String output = "";
 
@@ -261,7 +270,7 @@ public class C206_CaseStudy {
 
 	}
 
-	// Madhavan
+	// View all Enrolments (Madhavan)
 	public static void viewAllEnrolments(ArrayList<Enrolment> enrolmentList) {
 		setHeader(" VIEW ALL ENROLMENTS ");
 		String output = String.format("%-10s %-10s %-20s %-20s %-20s %-15s\n", "Enrolment ID", "Student ID",
@@ -282,9 +291,45 @@ public class C206_CaseStudy {
 		return output;
 	}
 
+	// View all Fees (Faiz)
+	public static void viewAllFees(ArrayList<Fee> feeList) {
+		setHeader("VIEW ALL FEES");
+		String output = "";
+
+		output = String.format("%-9S%-15S%-15S%-17S%-15S%S\n", "======", "======", "========", "==============",
+				"========", "==========");
+		output += String.format("%-9S%-15S%-15S%-17S%-15S%S\n", "fee id", "amount", "due date", "payment status",
+				"fee type", "student id");
+		output += String.format("%-9S%-15S%-15S%-17S%-15S%S\n", "======", "======", "========", "==============",
+				"========", "==========");
+
+		output += retrieveAllFees(feeList);
+
+		System.out.println(output);
+	}
+
+	public static String retrieveAllFees(ArrayList<Fee> feeList) {
+		String output = "";
+		String bool = "";
+
+		for (int i = 0; i < feeList.size(); i++) {
+			// change output for boolean
+			Fee fee = feeList.get(i);
+			if (fee.isPaymentStatus()) {
+				bool = "Yes";
+			} else {
+				bool = "No";
+			}
+			output += String.format("%-9d%-15.2f%-15s%-17s%-15s%d\n", fee.getFeeID(), fee.getAmount(), fee.getDueDate(),
+					bool, fee.getType(), fee.getStudentID());
+		}
+
+		return output;
+
+	}
 	// ====================== Option 2 Add ======================
 
-	// Add Students
+	// Add Student (Nur Syafiqah)
 	public static Student inputStudentDetails() {
 		int id = Helper.readInt("Enter Student ID > ");
 		String name = Helper.readString("Enter Student Name > ");
@@ -327,7 +372,7 @@ public class C206_CaseStudy {
 		}
 	}
 
-	// add course adib adam
+	// Add course (Adib Adam)
 	public static Course inputCourseDetails() {
 
 		String code = Helper.readString("Enter course code > ");
@@ -341,7 +386,6 @@ public class C206_CaseStudy {
 		return cors;
 	}
 
-	// add course adib adam
 	public static void addCourse(ArrayList<Course> courseList, Course cors) {
 		Course courseAdded;
 		// Check to see if the course already exists in the list.
@@ -364,8 +408,9 @@ public class C206_CaseStudy {
 		// Add the new course to the list when everything is correctly filled in.
 		courseList.add(cors);
 
-	} // madhavan
+	}
 
+	// Add Enrolment (Madhavan)
 	public static Enrolment inputEnrolment() {
 		int enrolmentID = Helper.readInt("Enter Enrolment ID");
 		int studentID = Helper.readInt("Enter Student ID > ");
@@ -397,7 +442,62 @@ public class C206_CaseStudy {
 		enrolmentList.add(enrol);
 	}
 
+	// Add new fee (Faiz)
+	public static boolean isStudentExist(ArrayList<Student> studentList, int id) {
+		boolean exist = false;
+
+		for (Student student : studentList) {
+			if (id == student.getStudentID()) {
+				exist = true;
+			}
+		}
+
+		return exist;
+
+	}
+
+	public static boolean isFeeExist(ArrayList<Fee> feeList, Fee fee) {
+		boolean exist = false;
+
+		for (Fee fee2 : feeList) {
+			if (fee.getFeeID() == fee2.getFeeID()) {
+				exist = true;
+			}
+		}
+
+		return exist;
+
+	}
+
+	public static Fee inputFeeDetails() {
+		double amount = Helper.readDouble("Enter Amount > "); // can negative e.g., refund
+		String dueDate = Helper.readString("Enter Due Date > ");
+		String type = Helper.readString("Enter Fee Type > ");
+		int studentID = Helper.readInt("Enter Student ID > ");
+
+		Fee fee = new Fee(amount, dueDate, type, studentID);
+		return fee;
+
+	}
+
+	public static void addFee(ArrayList<Student> studentList, ArrayList<Fee> feeList, Fee fee) {
+		if (!isStudentExist(studentList, fee.getStudentID())) { // check if studentID exist
+			System.out.println("Student does not exist.");
+		} else if (isFeeExist(feeList, fee)) { // check if an exact same fee already exist
+			System.out.println("This fee already exists.");
+		} else if (fee.getAmount() != 0) { // amount can't be zero
+			feeList.add(fee);
+			System.out.println("Fee added.");
+
+		}
+
+		else {
+			System.out.println("Fee not added.\n Check amount is not zero.");
+		}
+	}
+
 	// ====================== Option 3 Delete/Remove ======================
+	// Delete Student (Nur Syafiqah)
 	public static boolean doRemoveStudent(ArrayList<Student> studentList, int id) {
 		boolean isWithdraw = false;
 
@@ -446,7 +546,7 @@ public class C206_CaseStudy {
 		}
 	}
 
-	// delete course adib adam
+	// Delete course (Adib Adam)
 	public static boolean doRemoveCourse(ArrayList<Course> courseList, String courseCode) {
 		boolean isWithdraw = false;
 
@@ -466,7 +566,6 @@ public class C206_CaseStudy {
 
 	}
 
-	// delete course adib adam
 	public static void removeCourse(ArrayList<Course> courseList) {
 
 		viewAllCourse(courseList);
@@ -489,8 +588,9 @@ public class C206_CaseStudy {
 			}
 		}
 
-	}// madhavan
+	}
 
+	// Delete Enrolment (Madhavan)
 	public static boolean doRemoveEnrolment(ArrayList<Enrolment> enrolmentList, int enrolmentID) {
 		boolean isWithdraw = false;
 
@@ -532,5 +632,38 @@ public class C206_CaseStudy {
 			}
 		}
 
+	}
+
+	// Delete Fee (Faiz)
+	public static boolean doRemoveFee(ArrayList<Fee> feeList, int id) {
+		boolean found = false;
+
+		for (int i = 0; i < feeList.size(); i++) {
+			if (feeList.get(i).getFeeID() == id) {
+				feeList.remove(i);
+				found = true;
+			}
+		}
+		return found;
+	}
+
+	public static void removeFee(ArrayList<Fee> feeList) {
+		viewAllFees(feeList);
+
+		int feeID = Helper.readInt("Enter Fee ID > ");
+		char confirmation = Helper.readChar("Are you sure to delete Fee ID " + feeID + "? (Y/N)");
+
+		if (confirmation == 'Y' || confirmation == 'y') {
+			boolean removed = doRemoveFee(feeList, feeID);
+
+			if (removed) {
+				System.out.println("Fee removed!");
+			} else {
+				System.out.println("Invalid Fee ID.");
+			}
+		} else {
+			System.out.println("Fee unaffected.");
+			return;
+		}
 	}
 }

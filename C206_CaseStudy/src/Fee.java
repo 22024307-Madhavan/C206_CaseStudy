@@ -1,4 +1,6 @@
 public class Fee {
+	private static int counter = 1;
+	private int feeID;
 	private double amount;
 	private String dueDate;
 	private boolean paymentStatus;
@@ -6,6 +8,7 @@ public class Fee {
 	private int studentID;
 
 	public Fee(double amount, String dueDate, String type, int studentID) {
+		this.feeID = counter++;
 		this.amount = amount;
 		this.dueDate = dueDate;
 		this.paymentStatus = false;
@@ -13,6 +16,9 @@ public class Fee {
 		this.studentID = studentID;
 	}
 
+	public int getFeeID() {
+		return feeID;
+	}
 	public double getAmount() {
 		return amount;
 	}
@@ -25,6 +31,7 @@ public class Fee {
 		return paymentStatus;
 	}
 
+	// For future implementation
 	public void setPaymentStatus(boolean paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
@@ -36,5 +43,10 @@ public class Fee {
 	public int getStudentID() {
 		return studentID;
 	}
+
+//	public boolean equals(Fee fee) {
+//		return this.amount == fee.amount && this.dueDate.equals(fee.dueDate) && this.paymentStatus == fee.paymentStatus
+//				&& this.type.equals(fee.type) && this.studentID == fee.studentID;
+//	}
 
 }
