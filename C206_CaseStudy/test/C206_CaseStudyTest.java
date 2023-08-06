@@ -17,11 +17,16 @@ public class C206_CaseStudyTest {
 	private Fee fee1;// Faiz
 	private Fee fee2;// Faiz
 	private Fee fee3;// Faiz
+	private User admin1; // Justin
+	private User admin2; // Justin
+	private User teacher1; // Justin
+	private User teacher2; // Justin
 
 	private ArrayList<Student> studentList;// nur syafiqah
 	private ArrayList<Course> courseList;// adib adam
 	private ArrayList<Enrolment> enrolmentList;// Madhavan
 	private ArrayList<Fee> feeList; // Faiz
+	private ArrayList<User> userList; // Justin
 
 	@Before
 	public void setUp() throws Exception {
@@ -30,16 +35,21 @@ public class C206_CaseStudyTest {
 
 		course1 = new Course("C234", "History", "Ms Jenny", "Saturday");// adib adam
 		course2 = new Course("C230", "Art", "Mr Heng", "Sunday");// adib adam
-		
+
 		fee1 = new Fee(500, "30/08/2023", "tuition", student1.getStudentID());// Faiz
 		fee2 = new Fee(100.10, "31/08/2023", "tuition", 22046375); // Faiz - studentID is not found in feeList
 		fee3 = new Fee(300.10, "30/08/2023", "exam", student1.getStudentID());// Faiz
 
+		admin1 = new User("Admin", "S9632216E", "Mdm Godzilla", "1234567890", "82221689", "worlddominance@gmail.com"); // Justin
+		admin2 = new User("Admin", "S9222756Y", "Mr Wick", "1234567890", "86821689", "candlewick@gmail.com"); // Justin
+		teacher1 = new User("Teacher", "S6969456R", "Mr Winston", "1234567890", "86783699", "winorlose@gmail.com"); // Justin
+		teacher2 = new User("Teacher", "S9933256L", "Ms Jerry", "1234567890", "96732799", "tomlovesme@gmail.com"); // Justin
+
 		studentList = new ArrayList<Student>(); // nur syafiqah
 		courseList = new ArrayList<Course>(); // adib adam
 		feeList = new ArrayList<Fee>(); // Faiz
-		
-		
+		userList = new ArrayList<User>(); // Justin
+
 	}
 
 	@Test
@@ -121,7 +131,7 @@ public class C206_CaseStudyTest {
 		assertEquals("Test that the Enrolment arraylist size is unchanged.", 1, enrolmentList.size());
 
 	}
-	
+
 	@Test
 	public void testAddFee() { // Faiz
 		// Valid Fee ArrayList is not null and it is empty. (boundary)
@@ -152,6 +162,35 @@ public class C206_CaseStudyTest {
 		C206_CaseStudy.addFee(studentList, feeList, fee1);
 		assertEquals("Test that the Fee arraylist size is still 1.", 1, feeList.size());
 
+	}
+
+	// Justin //
+	@Test
+	public void testAddNewUser() {
+
+		// Test Case 1
+		// User list is not null and it is empty [BOUNDARY]
+		assertNotNull("Test if there is valid User arraylist to add to", userList);
+		assertEquals("Test that the User arraylist is empty.", 0, userList.size());
+
+		// Test Case 2
+		// Given an empty list, after adding 1 new user, the size of the list should be
+		// 1 [NORMAL]
+		C206_CaseStudy.addNewUser(userList, admin1);
+		assertEquals("Test that the User arraylist size is 1.", 1, userList.size());
+
+		// Test Case 3
+		// Add another user! [NORMAL]
+		C206_CaseStudy.addNewUser(userList, teacher1);
+		assertEquals("Test that the User arraylist size is now 2.", 2, userList.size());
+
+		// The newly added user is same as the last added user in the list
+		assertSame("Test that User is added to the end of the list.", teacher1, userList.get(1));
+
+		// Adding an item that has missing details [ERROR]
+		User user_missing = new User("", "", "Mr Winston", "1234567890", "86783699", "winorlose@gmail.com");
+		C206_CaseStudy.addNewUser(userList, user_missing);
+		assertEquals("Test that the User arraylist size is unchange.", 2, userList.size());
 	}
 
 	@Test
@@ -242,7 +281,7 @@ public class C206_CaseStudyTest {
 		assertEquals("Test that the display is correct.", testing, allEnrolment);
 
 	}
-	
+
 	@Test
 	public void testRetrieveAllFees() { // Faiz
 		// Test if feeList exist and empty (boundary)
@@ -259,27 +298,98 @@ public class C206_CaseStudyTest {
 		C206_CaseStudy.addFee(studentList, feeList, fee1);
 		C206_CaseStudy.addFee(studentList, feeList, fee3);
 		assertEquals("Test that the 2 fees are added.", 2, feeList.size());
-		
 
-		testOutput += String.format("%-9d%-15.2f%-15s%-17s%-15s%d\n", fee1.getFeeID(), fee1.getAmount(), fee1.getDueDate(), "No",
-				fee1.getType(), fee1.getStudentID());
-		testOutput += String.format("%-9d%-15.2f%-15s%-17s%-15s%d\n", fee3.getFeeID(), fee3.getAmount(), fee3.getDueDate(), "No",
-				fee3.getType(), fee3.getStudentID());
+		testOutput += String.format("%-9d%-15.2f%-15s%-17s%-15s%d\n", fee1.getFeeID(), fee1.getAmount(),
+				fee1.getDueDate(), "No", fee1.getType(), fee1.getStudentID());
+		testOutput += String.format("%-9d%-15.2f%-15s%-17s%-15s%d\n", fee3.getFeeID(), fee3.getAmount(),
+				fee3.getDueDate(), "No", fee3.getType(), fee3.getStudentID());
 		actualOutput = C206_CaseStudy.retrieveAllFees(feeList);
 		assertEquals("Test that the 2 fees are being displayed with the correct details.", testOutput, actualOutput);
-		
+
 		// Test that fee payment status when true is displayed as "Yes" (normal)
 		// Change a fee's payment status attribute to true.
 		testOutput = ""; // reset to empty String
-		testOutput += String.format("%-9d%-15.2f%-15s%-17s%-15s%d\n", fee1.getFeeID(), fee1.getAmount(), fee1.getDueDate(), "No",
-				fee1.getType(), fee1.getStudentID());
-		testOutput += String.format("%-9d%-15.2f%-15s%-17s%-15s%d\n", fee3.getFeeID(), fee3.getAmount(), fee3.getDueDate(), "Yes",
-				fee3.getType(), fee3.getStudentID());
+		testOutput += String.format("%-9d%-15.2f%-15s%-17s%-15s%d\n", fee1.getFeeID(), fee1.getAmount(),
+				fee1.getDueDate(), "No", fee1.getType(), fee1.getStudentID());
+		testOutput += String.format("%-9d%-15.2f%-15s%-17s%-15s%d\n", fee3.getFeeID(), fee3.getAmount(),
+				fee3.getDueDate(), "Yes", fee3.getType(), fee3.getStudentID());
 		feeList.get(1).setPaymentStatus(true); // Change payment status of the 2nd fee in feeList
 		actualOutput = C206_CaseStudy.retrieveAllFees(feeList);
 		assertEquals("Test that the 2 fees are being displayed with the correct details.", testOutput, actualOutput);
-		
+
 	}
+
+	// Justin //
+	@Test
+	public void testRetrieveAllAdmins() {
+
+		// Test Case 1 - Boundary -
+
+		// Test if User list is not null and empty
+		assertNotNull("Test if there is valid User arraylist to add to", userList);
+		assertEquals("Test that the User arraylist is empty.", 0, userList.size());
+
+		// Test Case 2 - Boundary -
+
+		// Retrieve the userList
+		String allAdmins = C206_CaseStudy.retrieveAllAdmins(userList);
+		String testing = "";
+		// Test if the output is empty
+		assertEquals("Test that nothing is displayed", testing, allAdmins);
+
+		// Test Case 3 - Normal -
+		// Add 2 users (admins) in userList
+		C206_CaseStudy.addNewUser(userList, admin1);
+		C206_CaseStudy.addNewUser(userList, admin2);
+		// Test that the list is NOT empty. Arraylist size = 2.
+		assertEquals("Test that User (admin) arraylist size is 2.", 2, userList.size());
+		// Retrieve the courseList
+		allAdmins = C206_CaseStudy.retrieveAllAdmins(userList);
+		testing = String.format("%-12s %-15s %-15s %-15s %-15s %-15s\n\n", "Admin", "S9632216E", "Mdm Godzilla",
+				"1234567890", "82221689", "worlddominance@gmail.com");
+		testing += String.format("%-12s %-15s %-15s %-15s %-15s %-15s\n\n", "Admin", "S9222756Y", "Mr Wick",
+				"1234567890", "86821689", "candlewick@gmail.com");
+		// Test that the details display accurately
+		assertEquals("Test that the display is correct.", testing, allAdmins);
+
+	}
+
+	// Justin //
+	@Test
+	public void testRetrieveAllTeachers() {
+
+		// Test Case 1 - Boundary -
+
+		// Test if User list is not null and empty
+		assertNotNull("Test if there is valid User arraylist to add to", userList);
+		assertEquals("Test that the User arraylist is empty.", 0, userList.size());
+
+		// Test Case 2 - Boundary -
+
+		// Retrieve the userList
+		String allTeachers = C206_CaseStudy.retrieveAllTeachers(userList);
+		String testing = "";
+		// Test if the output is empty
+		assertEquals("Test that nothing is displayed", testing, allTeachers);
+
+		// Test Case 3 - Normal -
+
+		// Add 2 users (teachers) in userList
+		C206_CaseStudy.addNewUser(userList, teacher1);
+		C206_CaseStudy.addNewUser(userList, teacher2);
+		// Test that the list is NOT empty. Arraylist size = 2.
+		assertEquals("Test that User (admin) arraylist size is 2.", 2, userList.size());
+		// Retrieve the courseList
+		allTeachers = C206_CaseStudy.retrieveAllTeachers(userList);
+		testing = String.format("%-12s %-15s %-15s %-15s %-15s %-15s\n\n", "Teacher", "S6969456R", "Mr Winston",
+				"1234567890", "86783699", "winorlose@gmail.com");
+		testing += String.format("%-12s %-15s %-15s %-15s %-15s %-15s\n\n", "Teacher", "S9933256L", "Ms Jerry",
+				"1234567890", "96732799", "tomlovesme@gmail.com");
+		// Test that the details display accurately
+		assertEquals("Test that the display is correct.", testing, allTeachers);
+
+	}
+
 	@Test
 	public void testDoRemoveStudent() { // nur syafiqah
 		// Test if Item list is not null and empty (boundary)
@@ -336,31 +446,55 @@ public class C206_CaseStudyTest {
 		confirm = C206_CaseStudy.doRemoveEnrolment(enrolmentList, 20);
 		assertFalse("Test that non-existing enrolment is NOT confirmed to delete?", confirm);
 	}
-	
+
 	@Test
 	public void testDoRemoveFee() { // Faiz
 		// Test if the correct fee is removed. (normal)
 		C206_CaseStudy.addStudent(studentList, student1);
 		C206_CaseStudy.addFee(studentList, feeList, fee1);
 		C206_CaseStudy.addFee(studentList, feeList, fee3);
-		assertEquals("Test that the 2 fees have been added",feeList.size(),2);
-		boolean deleted = C206_CaseStudy.doRemoveFee(feeList, fee1.getFeeID()); //remove fee1 from feeList by feeID
+		assertEquals("Test that the 2 fees have been added", feeList.size(), 2);
+		boolean deleted = C206_CaseStudy.doRemoveFee(feeList, fee1.getFeeID()); // remove fee1 from feeList by feeID
 		assertTrue(deleted); // check if returns True (meaning deleted)
-		assertEquals("Test that there is 1 fee left in feeList",feeList.size(),1);
-		assertEquals(fee3,feeList.get(0)); // Check that the last remaining fee is fee3
-		
-		// Test that nothing will happened when removing a fee that has already been removed (error)
-		assertEquals("Test that feeList size is 1.",feeList.size(),1);
-		deleted = C206_CaseStudy.doRemoveFee(feeList, fee1.getFeeID()); //remove fee1 again
+		assertEquals("Test that there is 1 fee left in feeList", feeList.size(), 1);
+		assertEquals(fee3, feeList.get(0)); // Check that the last remaining fee is fee3
+
+		// Test that nothing will happened when removing a fee that has already been
+		// removed (error)
+		assertEquals("Test that feeList size is 1.", feeList.size(), 1);
+		deleted = C206_CaseStudy.doRemoveFee(feeList, fee1.getFeeID()); // remove fee1 again
 		assertFalse(deleted); // check if returns false (not deleted)
-		assertEquals("Test that the feeList size remains as 1.",feeList.size(),1);
-		
-		// Test that nothing will happened when removing a fee that has already been removed (error)
-		assertEquals("Test that feeList size is 1.",feeList.size(),1);
-		deleted = C206_CaseStudy.doRemoveFee(feeList, 82); //remove non-existing fee by feeID
+		assertEquals("Test that the feeList size remains as 1.", feeList.size(), 1);
+
+		// Test that nothing will happened when removing a fee that has already been
+		// removed (error)
+		assertEquals("Test that feeList size is 1.", feeList.size(), 1);
+		deleted = C206_CaseStudy.doRemoveFee(feeList, 82); // remove non-existing fee by feeID
 		assertFalse(deleted); // check if returns false (not deleted)
-		assertEquals("Test that the feeList size remains as 1.",feeList.size(),1);
-		
+		assertEquals("Test that the feeList size remains as 1.", feeList.size(), 1);
+
+	}
+
+	// Justin //
+	@Test
+	public void testDoDeleteExistingUser() {
+
+		// Test if User list is not null and empty (boundary)
+		assertNotNull("Test if there is valid User ArrayList to remove", userList);
+
+		C206_CaseStudy.addNewUser(userList, admin1); // add a user (test to remove)
+		// Remove admin1 (normal)
+		Boolean confirm = C206_CaseStudy.doDeleteExistingUser(userList, "S9632216E");
+		assertTrue("Test if an existing user confirms to delete?", confirm);
+
+		// Remove another user AGAIN (error)
+		confirm = C206_CaseStudy.doDeleteExistingUser(userList, "S9222756Y");
+		assertFalse("Test if an existing user is NOT confirmed to delete again?", confirm);
+
+		// Remove non-existing course (error)
+		confirm = C206_CaseStudy.doDeleteExistingUser(userList, "T0000000P");
+		assertFalse("Test that non-existing user is NOT confirmed to delete?", confirm);
+
 	}
 
 	@After
@@ -378,11 +512,16 @@ public class C206_CaseStudyTest {
 		fee2 = null; // Faiz
 		fee3 = null; // Faiz
 		feeList = null; // Faiz
+		admin1 = null; // Justin
+		admin2 = null; // Justin
+		teacher1 = null; // Justin
+		teacher2 = null; // Justin
+		userList = null; // Justin
 	}
+	
+}
 
 	/*
 	 * @Test public void c206_test() { // fail("Not yet implemented");
 	 * assertTrue("C206_CaseStudy_SampleTest ", true); }
 	 */
-
-}

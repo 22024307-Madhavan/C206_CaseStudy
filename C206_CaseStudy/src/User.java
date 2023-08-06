@@ -1,41 +1,24 @@
+// Justin Li - 22046133 -
 
 public class User {
+	private String userRole;
 	private String nric;
-	private String name;
 	private String username;
 	private String password;
-	private String userType;
-	
-	public User(String nric, String name, String username, String password, String userType) {
+	private String contactNo;
+	private String emailAddress;
+
+	public User(String userRole, String nric, String username, String password, String contactNo, String emailAddress) {
+		this.userRole = userRole;
 		this.nric = nric;
-		this.name = name;
 		this.username = username;
 		this.password = password;
-		this.userType = userType;
-	}
-	
-	public User(String nric, String name, String username, String password) {
-		this.nric = nric;
-		this.name = name;
-		this.username = username;
-		this.password = password;
-		this.userType = "";
-	}
-
-	public String getUserType() {
-		return userType;
-	}
-
-	public void setUserType(String userType) {
-		this.userType = userType;
+		this.contactNo = contactNo;
+		this.emailAddress = emailAddress;
 	}
 
 	public String getNric() {
 		return nric;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public String getUsername() {
@@ -46,7 +29,15 @@ public class User {
 		return password;
 	}
 
+	public String getContactNo() {
+		return contactNo;
+	}
 
+	public String getEmailAddress() {
+		return emailAddress;
+	}
 
-	
+	public String getUserRole() {
+		return userRole;
+	}
 }

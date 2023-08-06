@@ -1,4 +1,6 @@
+
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class C206_CaseStudy {
 	private static final String CONTACTNUM_PATTERN = "[89][0-9]{7}";
@@ -8,6 +10,7 @@ public class C206_CaseStudy {
 		ArrayList<Student> studentList = new ArrayList<Student>();
 		ArrayList<Course> courseList = new ArrayList<Course>();
 		ArrayList<Fee> feeList = new ArrayList<Fee>();
+		ArrayList<User> userList = new ArrayList<User>();
 
 		studentList.add(new Student(22011021, "Nur Alisha", "87221032", "alice@mail.com"));
 		studentList.add(new Student(22011022, "Bob Tan", "98653211", "bobby@mail.com"));
@@ -22,6 +25,13 @@ public class C206_CaseStudy {
 		feeList.add(new Fee(200.99, "21/12/2023", "tuition", 22011021));
 		feeList.add(new Fee(300, "19/09/2023", "exam", 22011022));
 		feeList.add(new Fee(100.35, "23/10/2023", "tuition", 22011023));
+
+		userList.add(new User("Teacher", "S9823456R", "Mr Tan", "1234567890", "86783699", "tannnn09@gmail.com"));
+		userList.add(new User("Admin", "S6922256Y", "Mr Wang", "1234567890", "86821699", "wangwang@gmail.com"));
+		userList.add(new User("Teacher", "S7921656M", "Mr Stilton", "1234567890", "86583639", "geronimo@gmail.com"));
+		userList.add(
+				new User("Admin", "S1237456Y", "Mr Johnny Wang", "1234567890", "86821689", "johnnywang@gmail.com"));
+		userList.add(new User("Teacher", "S9723456M", "Mr Pang", "1234567890", "86453639", "pangpang@gmail.com"));
 
 		int option = 0;
 		int view = 0;
@@ -52,6 +62,11 @@ public class C206_CaseStudy {
 					viewAllFees(feeList); // faiz
 				} else if (view == 4) {
 					// insert "view all user accounts" code here
+
+					viewAllAdmins(userList);
+					viewAllTeachers(userList);
+					System.out.println();
+					accountStatistics(userList); // Justin
 
 				} else if (view == 5) {
 					// insert "view all courses" code here
@@ -90,6 +105,13 @@ public class C206_CaseStudy {
 				} else if (add == 4) {
 					// insert "add new user accounts" code here
 
+					User newUser = newUserInput();
+					addNewUser(userList, newUser);
+					System.out.println();
+					System.out.println("== User Added Successfully! :) ==");
+					System.out.println();
+					Helper.line(140, "-"); // Justin
+
 				} else if (add == 5) {
 					// insert "add new courses" code here
 					Course cors = inputCourseDetails(); // adib adam
@@ -121,6 +143,9 @@ public class C206_CaseStudy {
 					removeFee(feeList); // faiz
 				} else if (del == 4) {
 					// insert "delete an existing user accounts" code here
+
+					deleteExistingUser(userList);
+
 				} else if (del == 5) {
 					// insert "delete an existing courses" code here
 					removeCourse(courseList); // adib adam
@@ -327,6 +352,126 @@ public class C206_CaseStudy {
 		return output;
 
 	}
+
+	// J u s t i n ' s P a r t //
+
+	public static void viewAllAdmins(ArrayList<User> userList) {
+
+		String viewAdmin = "";
+
+		System.out.println();
+		Helper.line(50, "~");
+		System.out.println("<< ADMIN ACCOUNTS >>");
+		Helper.line(50, "~");
+
+		Helper.line(100, "-");
+		System.out.println(String.format("%-12s %-15s %-15s %-15s %-15s %-15s", "User Role", "NRIC", "Username",
+				"Password", "Contact", "Email"));
+		Helper.line(100, "-");
+
+		viewAdmin += retrieveAllAdmins(userList);
+		System.out.println(viewAdmin);
+
+		Helper.line(140, "-");
+
+	}
+
+	public static String retrieveAllAdmins(ArrayList<User> userList) {
+
+		String viewAdmin = "";
+
+		// Display all Admin - Justin -
+
+		for (int i = 0; i < userList.size(); i++) {
+
+			if (userList.get(i).getUserRole().equals("Admin")) {
+
+				viewAdmin += String.format("%-12s %-15s %-15s %-15s %-15s %-15s\n\n", userList.get(i).getUserRole(),
+						userList.get(i).getNric(), userList.get(i).getUsername(), userList.get(i).getPassword(),
+						userList.get(i).getContactNo(), userList.get(i).getEmailAddress());
+			}
+
+		}
+
+		return viewAdmin;
+	}
+
+	public static void viewAllTeachers(ArrayList<User> userList) {
+
+		String viewTeachers = "";
+
+		System.out.println("");
+		Helper.line(50, "~");
+		System.out.println("<< TEACHER ACCOUNTS >>");
+		Helper.line(50, "~");
+
+		Helper.line(100, "-");
+		System.out.println(String.format("%-12s %-15s %-15s %-15s %-15s %-15s", "User Role", "NRIC", "Username",
+				"Password", "Contact", "Email"));
+		Helper.line(100, "-");
+
+		viewTeachers += retrieveAllTeachers(userList);
+		System.out.println(viewTeachers);
+
+		Helper.line(140, "-");
+
+	}
+
+	public static String retrieveAllTeachers(ArrayList<User> userList) {
+
+		String viewTeachers = "";
+
+		for (int i = 0; i < userList.size(); i++) {
+
+			if (userList.get(i).getUserRole().equals("Teacher")) {
+
+				viewTeachers += String.format("%-12s %-15s %-15s %-15s %-15s %-15s\n\n", userList.get(i).getUserRole(),
+						userList.get(i).getNric(), userList.get(i).getUsername(), userList.get(i).getPassword(),
+						userList.get(i).getContactNo(), userList.get(i).getEmailAddress());
+			}
+
+		}
+
+		return viewTeachers;
+
+	}
+
+	public static void accountStatistics(ArrayList<User> userList) {
+
+		int adminCount = 0;
+		int teacherCount = 0;
+
+		for (int e = 0; e < userList.size(); e++) {
+
+			if (userList.get(e).getUserRole().equals("Admin")) {
+
+				adminCount++;
+			}
+
+			if (userList.get(e).getUserRole().equals("Teacher")) {
+
+				teacherCount++;
+			}
+
+		}
+
+		// Display account statistics - Justin -
+
+		Helper.line(50, "~");
+		System.out.println("<< ACCOUNTS OVERVIEW >>");
+		Helper.line(50, "~");
+
+		Helper.line(30, "-");
+		System.out.println("\nTotal Admins -----> " + adminCount + "\n");
+		System.out.println("Total Teachers ----> " + teacherCount + "\n");
+		Helper.line(30, "-");
+		System.out.println("\nTotal Accounts ----> " + (adminCount + teacherCount) + "\n");
+		Helper.line(30, "-");
+		System.out.println();
+		Helper.line(140, "-");
+
+	}
+
 	// ====================== Option 2 Add ======================
 
 	// Add Student (Nur Syafiqah)
@@ -494,6 +639,125 @@ public class C206_CaseStudy {
 		else {
 			System.out.println("Fee not added.\n Check amount is not zero.");
 		}
+	}
+
+	// [ Inputs for new user acc! - Justin - ]
+
+	public static User newUserInput() { // Inputs for adding a new user! - Justin
+
+		// Regex Patterns! - Justin -
+
+		String userRolePattern = "(Teacher|Admin)";
+		String nricPattern = "^[ST]\\d{7}[A-Z]$";
+		String passwordPattern = "^(.{8,})$";
+		String contactNoPattern = "^[89]\\d{7}$";
+		String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.com$";
+
+		// Inputs for adding users + Regex validation - Justin -
+
+		// Validate UserRole - Justin -
+
+		System.out.println();
+		String userRoleInput = Helper.readString("What is the new user's role? (Teacher/Admin) >>> ");
+		System.out.println();
+
+		while (!Pattern.matches(userRolePattern, userRoleInput)) {
+
+			System.out.println("Only 'Teacher' OR 'Admin' allowed!");
+			System.out.println();
+			userRoleInput = Helper.readString("What is the new user's role? (Teacher/Admin) >>> ");
+			System.out.println();
+		}
+
+		// Validate NRIC - Justin -
+
+		System.out.println();
+		String nricInput = Helper.readString("Please enter a valid Singapore NRIC >>> ");
+		System.out.println();
+
+		while (!Pattern.matches(nricPattern, nricInput)) {
+
+			System.out.println("Please enter a valid NRIC! [ S/T 1234567 A-Z]");
+			System.out.println();
+			nricInput = Helper.readString("Please enter a valid Singapore NRIC >>> ");
+			System.out.println();
+		}
+
+		// Validate Username - Justin -
+
+		System.out.println();
+		String usernameInput = Helper.readString("Now choose a username... >>> ");
+		System.out.println();
+
+		while (usernameInput.isEmpty()) {
+
+			System.out.println("Username is required >:(");
+			System.out.println();
+			usernameInput = Helper.readString("Now choose a username... >>> ");
+			System.out.println();
+
+		}
+
+		// Validate Password - Justin -
+
+		System.out.println();
+		String passwordInput = Helper.readString("Create a strong and memorable password >>> ");
+		System.out.println();
+
+		while (!Pattern.matches(passwordPattern, passwordInput)) {
+
+			System.out.println("Password should be 8-15 characters long");
+			System.out.println();
+			passwordInput = Helper.readString("Create a strong and memorable password >>> ");
+			System.out.println();
+		}
+
+		// Validate Contact Number - Justin -
+
+		System.out.println();
+		String contactNoInput = Helper.readString("What is your number? >>> +65 ");
+		System.out.println();
+
+		while (!Pattern.matches(contactNoPattern, contactNoInput)) {
+
+			System.out.println("Singapore numbers only. 8 digits please :)\nRemember to start with 8 or 9!");
+			System.out.println();
+			contactNoInput = Helper.readString("What is your number? >>> +65 ");
+			System.out.println();
+		}
+
+		// Validate Email - Justin -
+
+		System.out.println("");
+		String emailInput = Helper.readString("What is your email? >>> ");
+
+		while (!Pattern.matches(emailPattern, emailInput)) {
+
+			System.out.println("Please include '@' and '.com' in your email!");
+			System.out.println();
+			emailInput = Helper.readString("What is your email? >>> ");
+			System.out.println();
+		}
+
+		User newUser = new User(userRoleInput, nricInput, usernameInput, passwordInput, contactNoInput, emailInput);
+		return newUser;
+
+	}
+
+	// Method for test case "Add New User" - Justin -
+
+	public static void addNewUser(ArrayList<User> userList, User newUser) { // Adding new users! - Justin
+		User user;
+		for (int i = 0; i < userList.size(); i++) {
+			user = userList.get(i);
+			if (user.getNric().equalsIgnoreCase(newUser.getNric()))
+				return;
+		}
+		if ((newUser.getNric().isEmpty()) || (newUser.getUserRole().isEmpty())) {
+			return;
+		}
+
+		userList.add(newUser);
 	}
 
 	// ====================== Option 3 Delete/Remove ======================
@@ -666,4 +930,100 @@ public class C206_CaseStudy {
 			return;
 		}
 	}
-}
+
+	// [ Deleting Existing User Accounts - Justin - ]
+
+	public static boolean doDeleteExistingUser(ArrayList<User> userList, String nric) {
+
+		boolean isValid = false;
+
+		for (int e = 0; e < userList.size(); e++) {
+
+			if (userList.get(e).getNric().equals(nric)) {
+
+				userList.remove(e);
+
+				return true; // Return true to indicate successful deletion
+			}
+
+		}
+
+		return isValid; // Return false if user with given NRIC is not found
+
+	}
+
+	public static void deleteExistingUser(ArrayList<User> userList) {
+
+		viewAllAdmins(userList);
+		viewAllTeachers(userList);
+
+		System.out.println();
+		String nricInput = Helper.readString("Enter a NRIC to delete >>> ");
+		System.out.println();
+
+		// If NRIC input is wrong, it'll keep prompting the user until correct :)
+
+		boolean validNric = false;
+
+		while (!validNric) {
+
+			for (int e = 0; e < userList.size(); e++) {
+
+				if (userList.get(e).getNric().equals(nricInput)) {
+
+					validNric = true;
+					break;
+				}
+			}
+
+			if (!validNric) {
+
+				System.out.println();
+				System.out.println("Invalid NRIC :(");
+				System.out.println();
+				nricInput = Helper.readString("Enter an NRIC to delete >>> ");
+			}
+		}
+
+		System.out.println();
+		String confirm = Helper.readString("Are you sure??? (Yes/No) >>> ");
+		String confirmPattern = "(Yes|No)";
+
+		// If user confirm to delete, call the doDeleteExistingUser() method to remove
+		// the
+		// user from the list.
+
+		while (!Pattern.matches(confirmPattern, confirm)) {
+
+			System.out.println();
+			System.out.println("Only 'Yes' or 'No' allowed!");
+			System.out.println();
+			confirm = Helper.readString("Are you sure??? (Yes/No) >>> ");
+		}
+
+		if (confirm.equals("Yes")) {
+
+			Boolean delete = doDeleteExistingUser(userList, nricInput);
+
+			// If the student was successfully removed, print a message to confirm.
+			if (delete) { // delete == true
+				System.out.println();
+				System.out.println(nricInput + " deleted successfully :)");
+				System.out.println();
+				Helper.line(140, "-");
+			}
+
+		} // End of "if yes" option
+
+		if (confirm.equals("No")) {
+
+			System.out.println();
+			System.out.println("Deletion Cancelled!");
+			System.out.println();
+			Helper.line(140, "-");
+
+		}
+
+	}
+
+} // END OF ENTIRE CODE
