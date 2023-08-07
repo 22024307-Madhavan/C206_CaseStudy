@@ -48,6 +48,10 @@ public class C206_CaseStudy {
 		courseList.add(new Course("C208", "Literature", "Mr John", "Thursday"));
 		courseList.add(new Course("C338", "Geography", "Dr Alvin", "Friday"));
 
+		enrolmentList.add(new Enrolment(34,22027639 , "Mateen" , "17/04/2022" , "13/03/2025" , "DIT"));
+		enrolmentList.add(new Enrolment(34,22031035 , "Jeremiah" , "12/04/2022" , "10/03/2025" , "DDD"));
+		enrolmentList.add(new Enrolment(43,22016115 , "Fitri" , "14/04/2022" , "12/03/2025" , "DISA"));
+		
 		feeList.add(new Fee(200.99, "21/12/2023", "tuition", 22011021));
 		feeList.add(new Fee(300, "19/09/2023", "exam", 22011022));
 		feeList.add(new Fee(100.35, "23/10/2023", "tuition", 22011023));
@@ -317,7 +321,7 @@ public class C206_CaseStudy {
 	// View all Enrolments (Madhavan)
 	public static void viewAllEnrolments(ArrayList<Enrolment> enrolmentList) {
 		setHeader(" VIEW ALL ENROLMENTS ");
-		String output = String.format("%-10s %-10s %-20s %-20s %-20s %-15s\n", "Enrolment ID", "Student ID",
+		String output = String.format("%-15d %-34d %-30s %-20s %-20s %-23s\n", "Enrolment ID", "Student ID",
 				"Student Name", "Start Date", "End Date", "Course Name");
 		output += retrieveAllEnrolments(enrolmentList);
 		System.out.println(output);
@@ -327,7 +331,7 @@ public class C206_CaseStudy {
 		String output = "";
 
 		for (int i = 0; i < enrolmentList.size(); i++) {
-			output += String.format("%-10d %-10d %-20S %-20s %-20s %-15s\n", enrolmentList.get(i).getEnrolmentID(),
+			output += String.format("%-15d %-34d %-30s %-20s %-20s %-23s\n", enrolmentList.get(i).getEnrolmentID(),
 					enrolmentList.get(i).getStudentID(), enrolmentList.get(i).getStudentName(),
 					enrolmentList.get(i).getStartDate(), enrolmentList.get(i).getEndDate(),
 					enrolmentList.get(i).getCourseName());
