@@ -3,6 +3,32 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class C206_CaseStudy {
+	// Extract Constant
+	private static final int OPTION_DEL = 3;
+	private static final int OPTION_ADD = 2;
+	private static final int OPTION_VIEW = 1;
+	private static final int OPTION_DEL6 = 6;
+	private static final int OPTION_DEL5 = 5;
+	private static final int OPTION_DEL4 = 4;
+	private static final int OPTION_DEL3 = 3;
+	private static final int OPTION_DEL2 = 2;
+	private static final int OPTION_DEL1 = 1;
+	private static final int OPTION_ADD6 = 6;
+	private static final int OPTION_ADD5 = 5;
+	private static final int OPTION_ADD4 = 4;
+	private static final int OPTION_ADD3 = 3;
+	private static final int OPTION_ADD2 = 2;
+	private static final int OPTION_ADD1 = 1;
+	private static final int OPTION_VIEW6 = 6;
+	private static final int OPTION_VIEW5 = 5;
+	private static final int OPTION_VIEW4 = 4;
+	private static final int OPTION_VIEW3 = 3;
+	private static final int OPTION_VIEW2 = 2;
+	private static final int OPTION_VIEW1 = 1;
+	private static final int OPTION_QUIT = 4;
+	
+	
+	
 	private static final String CONTACTNUM_PATTERN = "[89][0-9]{7}";
 
 	public static void main(String[] args) {
@@ -40,27 +66,27 @@ public class C206_CaseStudy {
 
 		setHeader("Welcome to Tuition Management System!");
 
-		while (option != 4) {
+		while (option != OPTION_QUIT) {
 			menu();
 			option = Helper.readInt("Enter an option > ");
 
-			if (option == 1) {
+			if (option == OPTION_VIEW) {
 				viewMenu();
 				view = Helper.readInt("Enter option to view > ");
 				Helper.line(140, "-");
 
-				if (view == 1) { // ---- VIEW ----
+				if (view == OPTION_VIEW1) { // ---- VIEW ----
 					// insert "view all enrolments" code here
 					viewAllEnrolments(enrolmentList); // madhavan
 
-				} else if (view == 2) {
+				} else if (view == OPTION_VIEW2) {
 					// insert "view all students" code here
 					viewAllStudents(studentList); // nur syafiqah
 
-				} else if (view == 3) {
+				} else if (view == OPTION_VIEW3) {
 					// insert "view all fees" code here
 					viewAllFees(feeList); // faiz
-				} else if (view == 4) {
+				} else if (view == OPTION_VIEW4) {
 					// insert "view all user accounts" code here
 
 					viewAllAdmins(userList);
@@ -68,56 +94,51 @@ public class C206_CaseStudy {
 					System.out.println();
 					accountStatistics(userList); // Justin
 
-				} else if (view == 5) {
+				} else if (view == OPTION_VIEW5) {
 					// insert "view all courses" code here
 					viewAllCourse(courseList); // adib adam
 
-				} else if (view == 6) {
+				} else if (view == OPTION_VIEW6) {
 					// menu();
 				} else {
 					System.out.println("Invalid option to view.\n");
 
 					Helper.line(140, "-");
-
 				}
 
-			} else if (option == 2) {
+			} else if (option == OPTION_ADD) {
 				addMenu();
 				add = Helper.readInt("Enter option to add > ");
 				Helper.line(140, "-");
 
-				if (add == 1) {
+				if (add == OPTION_ADD1) {
 					// insert "add new enrolment" code here
 					Enrolment enrol = inputEnrolment();
 					addEnrolment(enrolmentList, enrol);
-
 					// System.out.println("\n enrolment added successfully!\n");
-				} else if (add == 2) {
+				} else if (add == OPTION_ADD2) {
 					// insert "add new students" code here
 					Student stud = inputStudentDetails();
 					addStudent(studentList, stud);
 
 					// System.out.println("\nStudent added successfully!\n");
-				} else if (add == 3) {
+				} else if (add == OPTION_ADD3) {
 					// insert "add new fees" code here
 					Fee fee = inputFeeDetails();
 					addFee(studentList, feeList, fee); // faiz
-				} else if (add == 4) {
+				} else if (add == OPTION_ADD4) {
 					// insert "add new user accounts" code here
-
 					User newUser = newUserInput();
 					addNewUser(userList, newUser);
 					System.out.println();
 					System.out.println("== User Added Successfully! :) ==");
 					System.out.println();
 					Helper.line(140, "-"); // Justin
-
-				} else if (add == 5) {
+				} else if (add == OPTION_ADD5) {
 					// insert "add new courses" code here
 					Course cors = inputCourseDetails(); // adib adam
 					addCourse(courseList, cors); // adib adam
-
-				} else if (add == 6) {
+				} else if (add == OPTION_ADD6) {
 					// menu();
 				} else {
 					System.out.println("Invalid option to add.\n");
@@ -125,47 +146,45 @@ public class C206_CaseStudy {
 
 				}
 
-			} else if (option == 3) {
+			} else if (option == OPTION_DEL) {
 				deleteMenu();
 				del = Helper.readInt("Enter option to delete > ");
 				Helper.line(140, "-");
 
-				if (del == 1) {
+				if (del == OPTION_DEL1) {
 					// insert "delete an existing enrolment" code here
 					removeEnrolment(enrolmentList); // madhavan
 
-				} else if (del == 2) {
+				} else if (del == OPTION_DEL2) {
 					// insert "delete an existing students" code here
 					removeStudent(studentList); // nur syafiqah
 
-				} else if (del == 3) {
+				} else if (del == OPTION_DEL3) {
 					// insert "delete an existing fees" code here
 					removeFee(feeList); // faiz
-				} else if (del == 4) {
+				} else if (del == OPTION_DEL4) {
 					// insert "delete an existing user accounts" code here
 
 					deleteExistingUser(userList);
 
-				} else if (del == 5) {
+				} else if (del == OPTION_DEL5) {
 					// insert "delete an existing courses" code here
 					removeCourse(courseList); // adib adam
 
-				} else if (del == 6) {
+				} else if (del == OPTION_DEL6) {
 					// menu();
 				} else {
 					System.out.println("Invalid option to delete.\n");
 					Helper.line(140, "-");
 
 				}
-			} else if (option == 4) {
+			} else if (option == OPTION_QUIT) {
 				System.out.println("Thank you for using Tuition Management System!");
 			} else {
 				System.out.println("Invalid option. Try Again.");
 				Helper.line(140, "-");
-
 			}
 		}
-
 	}
 
 	public static void menu() { // view, add, delete
@@ -260,12 +279,11 @@ public class C206_CaseStudy {
 
 	public static String retrieveAllStudents(ArrayList<Student> studentList) {
 		String output = "";
-//		Fee fee = feeList.get(i);
 
 		for (int i = 0; i < studentList.size(); i++) {
-			Student stud = studentList.get(i);
-			output += String.format("%-15d %-20s %-20s %-23s\n", stud.getStudentID(), stud.getStudentName(),
-					stud.getContactNo(), stud.getEmailAddress());
+			output += String.format("%-15d %-20s %-20s %-23s\n", studentList.get(i).getStudentID(),
+					studentList.get(i).getStudentName(), studentList.get(i).getContactNo(),
+					studentList.get(i).getEmailAddress());
 		}
 		return output;
 	}

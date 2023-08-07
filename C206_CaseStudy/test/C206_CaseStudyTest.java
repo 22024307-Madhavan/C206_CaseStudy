@@ -77,6 +77,12 @@ public class C206_CaseStudyTest {
 		C206_CaseStudy.addStudent(studentList, missingName);
 		assertEquals("Test that the Student arraylist size is unchange.", 1, studentList.size());
 
+		// Add an item that has missing detail (error)
+		// "" - Email Address has empty fields
+		// Size of the ArrayList would remain as 1.
+		Student missingEmail = new Student("Amy", "98223546", "");
+		C206_CaseStudy.addStudent(studentList, missingEmail);
+		assertEquals("Test that the Student arraylist size is unchange.", 1, studentList.size());
 	}
 
 	@Test
