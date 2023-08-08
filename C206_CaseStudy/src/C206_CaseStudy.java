@@ -71,11 +71,11 @@ public class C206_CaseStudy {
 		setHeader("Welcome to Tuition Management System!");
 
 		while (option != OPTION_QUIT) {
-			menu();
+			menu();		// Extract Method
 			option = Helper.readInt("Enter an option > ");
 
 			if (option == OPTION_VIEW) {
-				viewMenu();
+				viewMenu();		// Extract Method
 				view = Helper.readInt("Enter option to view > ");
 				Helper.line(140, "-");
 
@@ -111,7 +111,7 @@ public class C206_CaseStudy {
 				}
 
 			} else if (option == OPTION_ADD) {
-				addMenu();
+				addMenu();		// Extract Method
 				add = Helper.readInt("Enter option to add > ");
 				Helper.line(140, "-");
 
@@ -151,7 +151,7 @@ public class C206_CaseStudy {
 				}
 
 			} else if (option == OPTION_DEL) {
-				deleteMenu();
+				deleteMenu();		// Extract Method
 				del = Helper.readInt("Enter option to delete > ");
 				Helper.line(140, "-");
 
@@ -190,7 +190,7 @@ public class C206_CaseStudy {
 			}
 		}
 	}
-
+	// Extract Method
 	public static void menu() { // view, add, delete
 		System.out.println("1. View");
 		System.out.println("2. Add");
@@ -199,6 +199,7 @@ public class C206_CaseStudy {
 		Helper.line(140, "-");
 	}
 
+	// Extract Method
 	public static void viewMenu() {
 		setHeader("VIEW");
 		System.out.println("1. Enrolments");
@@ -210,6 +211,7 @@ public class C206_CaseStudy {
 		Helper.line(140, "-");
 	}
 
+	// Extract Method
 	public static void addMenu() {
 		setHeader("ADD");
 		System.out.println("1. Enrolment");
@@ -221,6 +223,7 @@ public class C206_CaseStudy {
 		Helper.line(140, "-");
 	}
 
+	// Extract Method
 	public static void deleteMenu() {
 		setHeader("DELETE");
 		System.out.println("1. Existing Enrolment");
@@ -251,23 +254,12 @@ public class C206_CaseStudy {
 	// return rtnVal;
 	// }
 
-//	public static String enrolmentStatus(boolean isEnrolled) {
-//		String status;
-//
-//		if (isEnrolled == true) {
-//			status = "Enrolled";
-//		} else {
-//			status = "Not Enrol"; // not enrol
-//		}
-//		return status;
-//	}
-
 	// ====================== Option 1 View ======================
 	// View all Students (Nur Syafiqah)
 	public static void viewAllStudents(ArrayList<Student> studentList) {
 		setHeader(" VIEW ALL STUDENTS ");
 		String output = "";
-		String format = "%-15s %-20s %-20s %-23s";
+		String format = "%-15s %-20s %-20s %-23s";		// Extract Variables
 
 		System.out.println(String.format(format, "==========", "============", "==============",
 				"============="));
@@ -286,12 +278,14 @@ public class C206_CaseStudy {
 		String output = "";
 
 		for (int i = 0; i < studentList.size(); i++) {
-			output += String.format("%-15d %-20s %-20s %-23s\n", studentList.get(i).getStudentID(),
-					studentList.get(i).getStudentName(), studentList.get(i).getContactNo(),
-					studentList.get(i).getEmailAddress());
+			Student stud = studentList.get(i);			// Extract Variables
+			output += String.format("%-15d %-20s %-20s %-23s\n", stud.getStudentID(),
+					stud.getStudentName(), stud.getContactNo(),
+					stud.getEmailAddress());
 		}
 		return output;
 	}
+
 
 	// View all Courses (Adib adam)
 	public static void viewAllCourse(ArrayList<Course> courseList) {
@@ -521,11 +515,9 @@ public class C206_CaseStudy {
 	}
 
 	public static void addStudent(ArrayList<Student> studentList, Student stud) {
-		Student studentAdded;
-
 		// Check to see if the student already exists in the list.
 		for (int i = 0; i < studentList.size(); i++) {
-			studentAdded = studentList.get(i);
+			Student studentAdded = studentList.get(i);		// Extract Variables
 			if (studentAdded.getContactNo().equals(stud.getContactNo())) {
 				// If mobile number already exists, don't add it to student list.
 				System.out.println("\nContact Number Exists. Try Again.\n");
@@ -799,7 +791,7 @@ public class C206_CaseStudy {
 	// ====================== Option 3 Delete/Remove ======================
 	// Delete Student (Nur Syafiqah)
 	public static boolean doRemoveStudent(ArrayList<Student> studentList, int id) {
-		boolean isWithdraw = false;
+		boolean removed = false;
 
 		if (id < 1) {
 			return false;
@@ -809,12 +801,13 @@ public class C206_CaseStudy {
 
 			// existing student ID
 			if (id == studentList.get(i).getStudentID()) {
-				studentList.remove(studentList.get(i));
-				isWithdraw = true;
+				Student student = studentList.get(i);
+				studentList.remove(student);		// Extract Variables
+				removed = true;
 				break;
 			}
 		}
-		return isWithdraw;
+		return removed;
 	}
 
 	public static void removeStudent(ArrayList<Student> studentList) {
