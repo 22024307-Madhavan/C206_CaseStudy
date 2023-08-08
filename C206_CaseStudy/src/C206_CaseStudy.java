@@ -242,17 +242,7 @@ public class C206_CaseStudy {
 		Helper.line(140, "-");
 	}
 
-	// private static String obscure(String inStr) {
-	// String rtnVal = "";
-	// if (inStr.length() <= 5) {
-	// rtnVal = inStr;
-	// } else {
-	// rtnVal = inStr.substring(0, 1) + String.format("%" + (inStr.length() - 5) +
-	// "s", " ").replaceAll(" ", "X")
-	// + inStr.substring(inStr.length() - 4);
-	// }
-	// return rtnVal;
-	// }
+
 
 	// ====================== Option 1 View ======================
 	// View all Students (Nur Syafiqah)
