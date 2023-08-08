@@ -510,7 +510,7 @@ public class C206_CaseStudyTest {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() throws Exception { 
 		student1 = null; // nur syafiqah
 		student2 = null; // nur syafiqah
 		studentList = null; // nur syafiqah

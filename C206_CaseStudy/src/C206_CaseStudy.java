@@ -42,14 +42,14 @@ public class C206_CaseStudy {
 		studentList.add(new Student("Bob Tan", "98653211", "bobby@mail.com"));
 		studentList.add(new Student("Charlie", "85529633", "charlie@mail.com"));
 
-		courseList.add(new Course("C110", "Mathematic", "Ms Mary", "Monday"));
+		courseList.add(new Course("C110", "Mathematics", "Ms Mary", "Monday"));
 		courseList.add(new Course("C235", "Science", "Mr James", "Tuesday"));
 		courseList.add(new Course("C105", "English", "Ms Tan", "Wednesday"));
 		courseList.add(new Course("C208", "Literature", "Mr John", "Thursday"));
 		courseList.add(new Course("C338", "Geography", "Dr Alvin", "Friday"));
 
 		enrolmentList.add(new Enrolment(34,22027639 , "Mateen" , "17/04/2022" , "13/03/2025" , "DIT"));
-		enrolmentList.add(new Enrolment(34,22031035 , "Jeremiah" , "12/04/2022" , "10/03/2025" , "DDD"));
+		enrolmentList.add(new Enrolment(44,22031035 , "Jeremiah" , "12/04/2022" , "10/03/2025" , "DDD"));
 		enrolmentList.add(new Enrolment(43,22016115 , "Fitri" , "14/04/2022" , "12/03/2025" , "DISA"));
 		
 		feeList.add(new Fee(200.99, "21/12/2023", "tuition", 22011021));
@@ -267,12 +267,13 @@ public class C206_CaseStudy {
 	public static void viewAllStudents(ArrayList<Student> studentList) {
 		setHeader(" VIEW ALL STUDENTS ");
 		String output = "";
+		String format = "%-15s %-20s %-20s %-23s";
 
-		System.out.println(String.format("%-15s %-20s %-20s %-23s", "==========", "============", "==============",
+		System.out.println(String.format(format, "==========", "============", "==============",
 				"============="));
-		System.out.println(String.format("%-15s %-20s %-20s %-23s", "Student ID", "Student Name", "Contact Number",
+		System.out.println(String.format(format, "Student ID", "Student Name", "Contact Number",
 				"Email Address"));
-		System.out.println(String.format("%-15s %-20s %-20s %-23s", "==========", "============", "==============",
+		System.out.println(String.format(format, "==========", "============", "==============",
 				"============="));
 
 		output += retrieveAllStudents(studentList);
@@ -296,10 +297,11 @@ public class C206_CaseStudy {
 	public static void viewAllCourse(ArrayList<Course> courseList) {
 		setHeader(" VIEW ALL COURSE ");
 		String output = "";
+		String format = "%-15s %-20s %-20s %-15s\n";
 
-		output += (String.format("%-15s %-20s %-20s %-15s", "===========", "===========", "===========", "=========="));
-		output += (String.format("%-15s %-20s %-20s %-15s", "CourseCode", "CourseTitle", "Instructor", "Schedule"));
-		output += (String.format("%-15s %-20s %-20s %-15s", "===========", "===========", "===========", "=========="));
+		output += (String.format(format, "===========", "===========", "===========", "=========="));
+		output += (String.format(format, "CourseCode", "CourseTitle", "Instructor", "Schedule"));
+		output += (String.format(format, "===========", "===========", "===========", "=========="));
 
 		output += retrieveAllCourse(courseList);
 		System.out.println(output);
@@ -321,8 +323,16 @@ public class C206_CaseStudy {
 	// View all Enrolments (Madhavan)
 	public static void viewAllEnrolments(ArrayList<Enrolment> enrolmentList) {
 		setHeader(" VIEW ALL ENROLMENTS ");
-		String output = String.format("%-15d %-34d %-30s %-20s %-20s %-23s\n", "Enrolment ID", "Student ID",
+		String format = "%-15s %-34s %-30s %-20s %-20s %-23s\n";
+		
+		
+		String output = String.format(format, "============", "==========",
+				"============", "==========", "========", "===========");
+		output += String.format(format, "Enrolment ID", "Student ID",
 				"Student Name", "Start Date", "End Date", "Course Name");
+		output += String.format(format, "============", "==========",
+				"============", "==========", "========", "===========");
+		
 		output += retrieveAllEnrolments(enrolmentList);
 		System.out.println(output);
 	}
@@ -343,12 +353,13 @@ public class C206_CaseStudy {
 	public static void viewAllFees(ArrayList<Fee> feeList) {
 		setHeader("VIEW ALL FEES");
 		String output = "";
+		String format = "%-9s%-15s%-15s%-17s%-15s%s\n";
 
-		output = String.format("%-9S%-15S%-15S%-17S%-15S%S\n", "======", "======", "========", "==============",
+		output = String.format(format, "======", "======", "========", "==============",
 				"========", "==========");
-		output += String.format("%-9S%-15S%-15S%-17S%-15S%S\n", "fee id", "amount", "due date", "payment status",
-				"fee type", "student id");
-		output += String.format("%-9S%-15S%-15S%-17S%-15S%S\n", "======", "======", "========", "==============",
+		output += String.format(format, "Fee ID", "Amount", "Due Date", "Payment Status",
+				"Fee Type", "Student ID");
+		output += String.format(format, "======", "======", "========", "==============",
 				"========", "==========");
 
 		output += retrieveAllFees(feeList);
@@ -386,11 +397,12 @@ public class C206_CaseStudy {
 		Helper.line(50, "~");
 		System.out.println("<< ADMIN ACCOUNTS >>");
 		Helper.line(50, "~");
-
+		
 		Helper.line(100, "-");
 		System.out.println(String.format("%-12s %-15s %-15s %-15s %-15s %-15s", "User Role", "NRIC", "Username",
 				"Password", "Contact", "Email"));
 		Helper.line(100, "-");
+		
 
 		viewAdmin += retrieveAllAdmins(userList);
 		System.out.println(viewAdmin);
@@ -581,7 +593,7 @@ public class C206_CaseStudy {
 
 	// Add Enrolment (Madhavan)
 	public static Enrolment inputEnrolment() {
-		int enrolmentID = Helper.readInt("Enter Enrolment ID");
+		int enrolmentID = Helper.readInt("Enter Enrolment ID > ");
 		int studentID = Helper.readInt("Enter Student ID > ");
 		String name = Helper.readString("Enter Student Name > ");
 		String StartDate = Helper.readString("Enter the Start Date of the Enrolment > ");
@@ -862,15 +874,15 @@ public class C206_CaseStudy {
 		char confirm = Helper.readChar("Are you sure to delete Course " + ccode + "? (Y/N) > ");
 		if (confirm == 'Y' || confirm == 'y') {
 
-			// If user confirm to delete, call the doRemoveStudent() method to remove the
-			// student from the list.
+			// If user confirm to delete, call the doRemoveCourse() method to remove the
+			// course from the list.
 			Boolean withdraw = doRemoveCourse(courseList, ccode);
 
-			// If the student was successfully removed, print a message to confirm.
+			// If the course was successfully removed, print a message to confirm.
 			if (withdraw) { // withdraw == true
 				System.out.println("\nCourse code " + ccode + " successfully delete!\n");
 			}
-			// Otherwise, print a message to indicate that the student ID is invalid.
+			// Otherwise, print a message to indicate that the course code is invalid.
 			else {
 				System.out.println("\nInvalid Course code.\n");
 			}
@@ -906,15 +918,15 @@ public class C206_CaseStudy {
 		char confirm = Helper.readChar("Are you sure to delete enrolment " + enrolID + "? (Y/N) > ");
 		if (confirm == 'Y' || confirm == 'y') {
 
-			// If user confirm to delete, call the doRemoveStudent() method to remove the
-			// student from the list.
+			// If user confirm to delete, call the doRemoveEnrolment() method to remove the
+			// enrolment from the list.
 			Boolean withdraw = doRemoveEnrolment(enrolmentList, enrolID);
 
-			// If the student was successfully removed, print a message to confirm.
+			// If the enrolment was successfully removed, print a message to confirm.
 			if (withdraw) { // withdraw == true
 				System.out.println("\n Student enrolment " + enrolID + " successfully delete!\n");
 			}
-			// Otherwise, print a message to indicate that the student ID is invalid.
+			// Otherwise, print a message to indicate that the enrolment id is invalid.
 			else {
 				System.out.println("\nInvalid Student enrolment .\n");
 			}
