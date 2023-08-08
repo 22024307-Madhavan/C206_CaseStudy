@@ -110,8 +110,8 @@ public class C206_CaseStudyTest {
 		// Add an item that has missing detail (error)
 		// "" - Course code has empty fields
 		// Size of the ArrayList would remain as 1.
-		Course missingCode = new Course("C239", "Malay", "Ms Juan", "Sunday");
-		C206_CaseStudy.addCourse(courseList, missingCode);
+		Course missingSchedule = new Course("C239", "Malay", "Ms Juan", "");
+		C206_CaseStudy.addCourse(courseList, missingSchedule);
 		assertEquals("Test that the Course arraylist size is unchange.", 1, courseList.size());
 	}// adib adam
 
@@ -257,8 +257,8 @@ public class C206_CaseStudyTest {
 		assertEquals("Test that Course arraylist size is 2.", 2, courseList.size());
 		// Retrieve the courseList
 		allCourse = C206_CaseStudy.retrieveAllCourse(courseList);
-		testing = String.format("%-15d %-20s %-20s %-15s\n", "C234", "History", "Ms Jenny", "Saturday");
-		testing += String.format("%-15d %-20s %-20s %-15s\n", "C230", "Art", "Mr Heng", "Sunday");
+		testing = String.format("%-15s %-20s %-20s %-15s\n", "C234", "History", "Ms Jenny", "Saturday");
+		testing += String.format("%-15s %-20s %-20s %-15s\n", "C230", "Art", "Mr Heng", "Sunday");
 		// Test that the details display accurately
 		assertEquals("Test that the display is correct.", testing, allCourse);
 
@@ -428,11 +428,11 @@ public class C206_CaseStudyTest {
 
 		C206_CaseStudy.addCourse(courseList, course1); // add course (test to remove)
 		// Remove existing Course (normal0
-		Boolean confirm = C206_CaseStudy.doRemoveCourse(courseList, "C230");
-		assertTrue("Test if an existing student confirms to delete?", confirm);
+		Boolean confirm = C206_CaseStudy.doRemoveCourse(courseList, "C234");
+		assertTrue("Test if an existing course confirms to delete?", confirm);
 
 		// Remove existing Course AGAIN (error)
-		confirm = C206_CaseStudy.doRemoveCourse(courseList, "C235");
+		confirm = C206_CaseStudy.doRemoveCourse(courseList, "C234");
 		assertFalse("Test if an existing Course is NOT confirm to delete again?", confirm);
 
 		// Remove non-existing course (error)

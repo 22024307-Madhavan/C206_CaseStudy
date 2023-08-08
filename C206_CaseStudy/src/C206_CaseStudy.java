@@ -556,21 +556,22 @@ public class C206_CaseStudy {
 
 	public static void addCourse(ArrayList<Course> courseList, Course cors) {
 		Course courseAdded;
+		
 		// Check to see if the course already exists in the list.
 		for (int i = 0; i < courseList.size(); i++) {
 			courseAdded = courseList.get(i);
 			if (courseAdded.getCourseCode().equalsIgnoreCase(cors.getCourseCode())) {
 				// The course code already exists, don't add it again to course list.
 				System.out.println("course code  existed !!");
-				;
+				return;
 			}
 		}
 		// Check to make sure that the student's name and email address are not empty.
-		if (cors.getCourseCode().isEmpty() || (cors.getCourseTitle().isEmpty())) {
+		if (cors.getCourseCode().isEmpty() || (cors.getCourseTitle().isEmpty()) || (cors.getSchedule().isEmpty())) {
 			// The course code and course title is empty, don't add them in
 			// course ArrayList.
 			System.out.println(" Course code and course name cant be empty!");
-			;
+			return;
 		}
 
 		// Add the new course to the list when everything is correctly filled in.
