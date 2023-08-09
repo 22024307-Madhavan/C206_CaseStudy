@@ -287,9 +287,9 @@ public class C206_CaseStudyTest {
 		assertEquals("Test that Enrolment arraylist size is 2.", 2, enrolmentList.size());
 		// Retrieve the enrolmentList
 		allEnrolment = C206_CaseStudy.retrieveAllEnrolments(enrolmentList);
-		testing += String.format("%-15d %-34d %-30s %-20s %-20s %-23s\n", enrolment1.getEnrolmentID(),
+		testing += String.format("%-15s %-13s %-14s %-15s %-15s %-13s\n", enrolment1.getEnrolmentID(),
 				enrolment1.getStudentID(), "Ryan", "18/4/2022", "3/3/2025", "DBIS");
-		testing += String.format("%-15d %-34d %-30s %-20s %-20s %-23s\n", enrolment2.getEnrolmentID(), 
+		testing += String.format("%-15s %-13s %-14s %-15s %-15s %-13s\n", enrolment2.getEnrolmentID(), 
 				enrolment2.getStudentID(), "Riyad", "18/4/2022","3/3/2025", "DFT");
 		// Test that the details display accurately
 		assertEquals("Test that the display is correct.", testing, allEnrolment);
@@ -352,12 +352,13 @@ public class C206_CaseStudyTest {
 		assertEquals("Test that nothing is displayed", testing, allAdmins);
 
 		// Test Case 3 - Normal -
+		
 		// Add 2 users (admins) in userList
 		C206_CaseStudy.addNewUser(userList, admin1);
 		C206_CaseStudy.addNewUser(userList, admin2);
 		// Test that the list is NOT empty. Arraylist size = 2.
 		assertEquals("Test that User (admin) arraylist size is 2.", 2, userList.size());
-		// Retrieve the courseList
+		// Retrieve the userList
 		allAdmins = C206_CaseStudy.retrieveAllAdmins(userList);
 		testing = String.format("%-12s %-15s %-15s %-15s %-15s %-15s\n\n", "Admin", "S9632216E", "Mdm Godzilla",
 				"1234567890", "82221689", "worlddominance@gmail.com");
@@ -391,9 +392,9 @@ public class C206_CaseStudyTest {
 		// Add 2 users (teachers) in userList
 		C206_CaseStudy.addNewUser(userList, teacher1);
 		C206_CaseStudy.addNewUser(userList, teacher2);
-		// Test that the list is NOT empty. Arraylist size = 2.
+		// Test that the User list is NOT empty. Arraylist size = 2.
 		assertEquals("Test that User (admin) arraylist size is 2.", 2, userList.size());
-		// Retrieve the courseList
+		// Retrieve the userList
 		allTeachers = C206_CaseStudy.retrieveAllTeachers(userList);
 		testing = String.format("%-12s %-15s %-15s %-15s %-15s %-15s\n\n", "Teacher", "S6969456R", "Mr Winston",
 				"1234567890", "86783699", "winorlose@gmail.com");
@@ -505,7 +506,7 @@ public class C206_CaseStudyTest {
 		confirm = C206_CaseStudy.doDeleteExistingUser(userList, "S9222756Y");
 		assertFalse("Test if an existing user is NOT confirmed to delete again?", confirm);
 
-		// Remove non-existing course (error)
+		// Remove non-existing User (error)
 		confirm = C206_CaseStudy.doDeleteExistingUser(userList, "T0000000P");
 		assertFalse("Test that non-existing user is NOT confirmed to delete?", confirm);
 

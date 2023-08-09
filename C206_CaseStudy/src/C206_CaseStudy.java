@@ -307,7 +307,7 @@ public class C206_CaseStudy {
 	// View all Enrolments (Madhavan)
 	public static void viewAllEnrolments(ArrayList<Enrolment> enrolmentList) {
 		setHeader(" VIEW ALL ENROLMENTS ");
-		String format = "%-15s %-34s %-30s %-20s %-20s %-23s\n";
+		String format = "%-15s %-13s %-14s %-15s %-15s %-13s\n";
 		
 		
 		String output = String.format(format, "============", "==========",
@@ -325,7 +325,7 @@ public class C206_CaseStudy {
 		String output = "";
 
 		for (int i = 0; i < enrolmentList.size(); i++) {
-			output += String.format("%-15d %-34d %-30s %-20s %-20s %-23s\n", enrolmentList.get(i).getEnrolmentID(),
+			output += String.format("%-15d %-13d %-14s %-15s %-15s %-13s\n", enrolmentList.get(i).getEnrolmentID(),
 					enrolmentList.get(i).getStudentID(), enrolmentList.get(i).getStudentName(),
 					enrolmentList.get(i).getStartDate(), enrolmentList.get(i).getEndDate(),
 					enrolmentList.get(i).getCourseName());
