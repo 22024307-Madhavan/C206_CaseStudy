@@ -29,6 +29,7 @@ public class C206_CaseStudy {
 	
 	
 	private static final String CONTACTNUM_PATTERN = "[89][0-9]{7}";
+	
 	private static final String userRolePattern = "(Teacher|Admin)";
 	private static final String nricPattern = "^[ST]\\d{7}[A-Z]$";
 	private static final String passwordPattern = "^(.{8,})$";
