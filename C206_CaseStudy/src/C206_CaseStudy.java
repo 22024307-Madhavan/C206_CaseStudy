@@ -28,9 +28,13 @@ public class C206_CaseStudy {
 	private static final int OPTION_QUIT = 4;
 	
 	
-	
 	private static final String CONTACTNUM_PATTERN = "[89][0-9]{7}";
-
+	private static final String userRolePattern = "(Teacher|Admin)";
+	private static final String nricPattern = "^[ST]\\d{7}[A-Z]$";
+	private static final String passwordPattern = "^(.{8,})$";
+	private static final String contactNoPattern = "^[89]\\d{7}$";
+	private static final String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.com$";
+	
 	public static void main(String[] args) {
 		ArrayList<Enrolment> enrolmentList = new ArrayList<Enrolment>();
 		ArrayList<Student> studentList = new ArrayList<Student>();
@@ -134,9 +138,6 @@ public class C206_CaseStudy {
 					// insert "add new user accounts" code here
 					User newUser = newUserInput();
 					addNewUser(userList, newUser);
-					System.out.println();
-					System.out.println("== User Added Successfully! :) ==");
-					System.out.println();
 					Helper.line(140, "-"); // Justin
 				} else if (add == OPTION_ADD5) {
 					// insert "add new courses" code here
@@ -664,12 +665,15 @@ public class C206_CaseStudy {
 	public static User newUserInput() { // Inputs for adding a new user! - Justin
 
 		// Regex Patterns! - Justin -
+		
+		// on top now //
+		
+		// String userRolePattern = "(Teacher|Admin)"; //
+		// String nricPattern = "^[ST]\\d{7}[A-Z]$"; //
+		// String passwordPattern = "^(.{8,})$"; //
+		// String contactNoPattern = "^[89]\\d{7}$"; //
+		// String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.com$"; //
 
-		String userRolePattern = "(Teacher|Admin)";
-		String nricPattern = "^[ST]\\d{7}[A-Z]$";
-		String passwordPattern = "^(.{8,})$";
-		String contactNoPattern = "^[89]\\d{7}$";
-		String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.com$";
 
 		// Inputs for adding users + Regex validation - Justin -
 
@@ -776,6 +780,9 @@ public class C206_CaseStudy {
 		}
 
 		userList.add(newUser);
+		System.out.println();
+		System.out.println("== User Added Successfully! :) ==");
+		System.out.println();
 	}
 
 	// ====================== Option 3 Delete/Remove ======================
