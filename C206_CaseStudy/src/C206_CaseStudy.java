@@ -32,36 +32,35 @@ public class C206_CaseStudy {
 	private static final String CONTACTNUM_PATTERN = "[89][0-9]{7}";
 
 	public static void main(String[] args) {
-		ArrayList<Enrolment> enrolmentList = new ArrayList<Enrolment>();
-		ArrayList<Student> studentList = new ArrayList<Student>();
-		ArrayList<Course> courseList = new ArrayList<Course>();
-		ArrayList<Fee> feeList = new ArrayList<Fee>();
-		ArrayList<User> userList = new ArrayList<User>();
+		ArrayList<Enrolment> enrolmentList = new ArrayList<Enrolment>(); //Madhavan
+		ArrayList<Student> studentList = new ArrayList<Student>();//Syafiqah
+		ArrayList<Course> courseList = new ArrayList<Course>(); //Adib
+		ArrayList<Fee> feeList = new ArrayList<Fee>(); //Faiz
+		ArrayList<User> userList = new ArrayList<User>(); //Justin
 
-		studentList.add(new Student("Nur Alisha", "87221032", "alice@mail.com"));
-		studentList.add(new Student("Bob Tan", "98653211", "bobby@mail.com"));
-		studentList.add(new Student("Charlie", "85529633", "charlie@mail.com"));
+		studentList.add(new Student("Nur Alisha", "87221032", "alice@mail.com"));//Syafiqah
+		studentList.add(new Student("Bob Tan", "98653211", "bobby@mail.com"));//Syafiqah
+		studentList.add(new Student("Charlie", "85529633", "charlie@mail.com"));//Syafiqah
 
-		courseList.add(new Course("C110", "Mathematics", "Ms Mary", "Monday"));
-		courseList.add(new Course("C235", "Science", "Mr James", "Tuesday"));
-		courseList.add(new Course("C105", "English", "Ms Tan", "Wednesday"));
-		courseList.add(new Course("C208", "Literature", "Mr John", "Thursday"));
-		courseList.add(new Course("C338", "Geography", "Dr Alvin", "Friday"));
+		courseList.add(new Course("C110", "Mathematics", "Ms Mary", "Monday"));//Adib
+		courseList.add(new Course("C235", "Science", "Mr James", "Tuesday"));//Adib
+		courseList.add(new Course("C105", "English", "Ms Tan", "Wednesday"));//Adib
+		courseList.add(new Course("C208", "Literature", "Mr John", "Thursday"));//Adib
+		courseList.add(new Course("C338", "Geography", "Dr Alvin", "Friday"));//Adib
 
-		enrolmentList.add(new Enrolment(34,22027639 , "Mateen" , "17/04/2022" , "13/03/2025" , "DIT"));
-		enrolmentList.add(new Enrolment(44,22031035 , "Jeremiah" , "12/04/2022" , "10/03/2025" , "DDD"));
-		enrolmentList.add(new Enrolment(43,22016115 , "Fitri" , "14/04/2022" , "12/03/2025" , "DISA"));
+		enrolmentList.add(new Enrolment(01,22027639 , "Mateen" , "17/04/2022" , "13/03/2025" , "DIT"));//Madhavan
+		enrolmentList.add(new Enrolment(02,22031035 , "Jeremiah" , "12/04/2022" , "10/03/2025" , "DDD"));//Madhavan
+		enrolmentList.add(new Enrolment(03,22016115 , "Fitri" , "14/04/2022" , "12/03/2025" , "DISA"));//Madhavan
 		
-		feeList.add(new Fee(200.99, "21/12/2023", "tuition", 22011021));
-		feeList.add(new Fee(300, "19/09/2023", "exam", 22011022));
-		feeList.add(new Fee(100.35, "23/10/2023", "tuition", 22011023));
+		feeList.add(new Fee(200.99, "21/12/2023", "tuition", 22011021));//Faiz
+		feeList.add(new Fee(300, "19/09/2023", "exam", 22011022));//Faiz
+		feeList.add(new Fee(100.35, "23/10/2023", "tuition", 22011023));//Faiz
 
-		userList.add(new User("Teacher", "S9823456R", "Mr Tan", "1234567890", "86783699", "tannnn09@gmail.com"));
-		userList.add(new User("Admin", "S6922256Y", "Mr Wang", "1234567890", "86821699", "wangwang@gmail.com"));
-		userList.add(new User("Teacher", "S7921656M", "Mr Stilton", "1234567890", "86583639", "geronimo@gmail.com"));
-		userList.add(
-				new User("Admin", "S1237456Y", "Mr Johnny Wang", "1234567890", "86821689", "johnnywang@gmail.com"));
-		userList.add(new User("Teacher", "S9723456M", "Mr Pang", "1234567890", "86453639", "pangpang@gmail.com"));
+		userList.add(new User("Teacher", "S9823456R", "Mr Tan", "1234567890", "86783699", "tannnn09@gmail.com"));//Justin
+		userList.add(new User("Admin", "S6922256Y", "Mr Wang", "1234567890", "86821699", "wangwang@gmail.com"));//Justin
+		userList.add(new User("Teacher", "S7921656M", "Mr Stilton", "1234567890", "86583639", "geronimo@gmail.com"));//Justin
+		userList.add(new User("Admin", "S1237456Y", "Mr Johnny Wang", "1234567890", "86821689", "johnnywang@gmail.com"));//Justin
+		userList.add(new User("Teacher", "S9723456M", "Mr Pang", "1234567890", "86453639", "pangpang@gmail.com"));//Justin
 
 		int option = 0;
 		int view = 0;
@@ -119,13 +118,13 @@ public class C206_CaseStudy {
 					// insert "add new enrolment" code here
 					Enrolment enrol = inputEnrolment();
 					addEnrolment(enrolmentList, enrol);
-					// System.out.println("\n enrolment added successfully!\n");
+					
 				} else if (add == OPTION_ADD2) {
 					// insert "add new students" code here
 					Student stud = inputStudentDetails();
 					addStudent(studentList, stud);
 
-					// System.out.println("\nStudent added successfully!\n");
+					
 				} else if (add == OPTION_ADD3) {
 					// insert "add new fees" code here
 					Fee fee = inputFeeDetails();
