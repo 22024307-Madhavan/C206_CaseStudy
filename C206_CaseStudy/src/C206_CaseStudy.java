@@ -27,9 +27,7 @@ public class C206_CaseStudy {
 	private static final int OPTION_VIEW1 = 1;
 	private static final int OPTION_QUIT = 4;
 	
-	
-	private static final String CONTACTNUM_PATTERN = "[89][0-9]{7}";
-	
+	// Regex Constants
 	private static final String userRolePattern = "(Teacher|Admin)";
 	private static final String nricPattern = "^[ST]\\d{7}[A-Z]$";
 	private static final String passwordPattern = "^(.{8,})$";
@@ -497,7 +495,7 @@ public class C206_CaseStudy {
 	// Add Student (Nur Syafiqah)
 	public static Student inputStudentDetails() {
 		String name = Helper.readString("Enter Student Name > ");
-		String mobile = Helper.readStringRegEx("Enter Contact Number > ", CONTACTNUM_PATTERN);
+		String mobile = Helper.readStringRegEx("Enter Contact Number > ", contactNoPattern);
 		String email = Helper.readString("Enter Email Address > ");
 
 		// Create a new Student object with the entered information.
